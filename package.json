@@ -1,0 +1,36 @@
+{
+  "name": "ivanerben_website",
+  "version": "1.0.0",
+  "description": "Ivan Erben's web site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AHAstudio",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-order": "^1.1.1",
+    "gulp-postcss": "^6.3.0",
+    "gulp-rev": "^7.1.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-uglify": "^2.1.0",
+    "gulp-usemin": "^0.3.28",
+    "gulp-watch": "^4.3.11",
+    "imagemin-jpeg-recompress": "^5.1.0",
+    "imagemin-pngquant": "^5.0.0",
+    "mq4-hover-shim": "^0.3.0",
+    "precss": "^1.4.0"
+  },
+  "dependencies": {
+    "animate.css": "^3.5.2"
+  }
+}

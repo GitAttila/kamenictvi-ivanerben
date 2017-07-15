@@ -1,0 +1,271 @@
+@media (min-width: 2560px) {
+   
+
+}
+
+@media only screen and (max-width: 2560px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+/* Big tablet to 1200px (widths smaller than the 1200px row) */
+@media only screen and (max-width: 1200px) {
+    .parallax-section {
+        background-attachment: inherit;
+        background-attachment: initial;
+    }
+    #main-carousel .bg-overlay {
+        background-attachment: inherit;
+        background-attachment: initial;
+    }
+    .carousel-indicators {
+        display: none;
+    }
+    .grid-item,.grid-item-pricing { 
+        width: 33%;
+    }
+    .grid-item-selected {
+        width: 66%;
+    }
+    #main-carousel .carousel-text h2 {
+        font-size: 3rem;
+    }
+    #main-carousel .carousel-text p {
+        font-size: 1.7rem;
+    }
+    .section-header {
+        font-size: 3.5rem;
+        margin-bottom: 2.5rem;
+    }
+    .section-subheader {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+    .carousel-feature .carousel-inner {
+        height: 400px;
+        width: 400px;
+    }
+    .about-carousel-caption .section-header {
+        margin-bottom: 1rem;
+    }
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    .about-carousel-caption {
+        padding: 1.5rem;
+    }
+    .card-title {
+        font-size: 2rem;
+    } 
+    .card-text {
+        font-size: 1.2rem;
+    } 
+    blockquote {
+        font-size: 1rem;
+    }
+    #filter-portfolio .btn-portfolio {
+        font-size: 1.2rem;
+    }
+    .card-pricing {
+        .card-pricing-wrapper {
+            .card-block {
+                padding: 0.75rem;
+                .card-title{
+                    font-size: 1.7rem;
+                }
+                .card-text{
+                    font-size: 1.2rem;
+                }
+            }
+            .card-footer {
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+}
+
+/* Small tablet to big tablet: from 768px to 992px */
+@media only screen and (max-width: 991px) {
+    .carousel-feature .carousel-inner {
+        height: 350px;
+        width: 350px;
+    }
+    .container-navbar {
+        position: relative;
+        right: 0;
+        left: 0;
+        top: 0;
+        transform:translateY(0);
+    }
+    .navbar-toggleable-md > .container {
+        .container {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+    .about-carousel-caption {
+        width: 75vw;
+        padding: 0.5rem;
+        h3 {
+            font-size: 1.4rem;
+        }
+        h2.section-header {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+/* Small phones to small tablets: from 544px to 767px */
+@media only screen and (max-width: 767px) {
+    #portfolios {
+        padding-top: 5rem;
+    }
+    .btn-site {
+        padding: 0.2rem 0.5rem;
+    }
+    .btn-down {
+        left: inherit;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        transform:translateX(0);
+    }
+    .btn-map{
+        top: 4.5rem;
+    }
+    .fixed-mobile {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 5rem;
+    }
+    #main-carousel .carousel-text{
+        // background-color: rgba(0,0,0,0.33);
+        transform:translateY(0);
+        text-align: center;
+        padding: 1rem;
+    }
+    #main-carousel .carousel-text h2 {
+        font-size: 2rem;
+    }
+    #main-carousel .carousel-text p {
+        display: none;        
+    }
+    .featurette>.text-right,.featurette>.text-left {
+        text-align: center!important;
+    }
+    .section-header {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    .about-carousel-caption .section-header {
+        margin-bottom: 0;
+    }
+    .carousel-feature .carousel-inner {
+        height: 350px;
+        width: 350px;
+    }
+    .featurette h3 {
+        font-size: 2.2rem;
+    }
+    .featurette h4 {
+        font-size: 1.4rem;
+    }
+    .about-carousel-caption {
+        width: 85vw;
+        padding: 0.5rem;
+        h3 {
+            font-size: 1rem;
+        }
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+    }
+    footer {
+        padding-bottom: 0;
+    }
+    footer .copyright-msg {
+        text-align: center;
+        padding: 2rem 0 0 0;
+    }
+    .clients h4 {
+        font-size: 1rem;
+    }
+    footer .social-media {
+        text-align: center;
+        padding: 0 0 2rem 0;
+    }
+    .grid-item,.grid-item-pricing  { 
+        width: 50%;
+    }
+    .grid-item-selected{
+        width: 100%;
+        img {
+            filter: grayscale(0);
+        }
+    }
+    .grid-item .img-desc {
+        display: none;
+    }
+}
+
+/* Small phones: from 0 to 576px */
+@media only screen and (max-width: 575px) {
+    section {
+        padding-top: 4rem;
+    }
+    .navbar .container {
+        max-width: 100%;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    .navbar-brand {
+        white-space: normal;
+    }
+    .navbar .navbar-brand h2{
+        font-size: 1.6rem;
+    }
+    .navbar .navbar-brand h1{
+        font-size: 0.7rem;
+    }
+    #main-carousel .carousel-image {
+        width: 100%;
+        top: 90%;
+        transform: translate(-50%,-100%);
+    }
+    .carousel-feature .carousel-inner {
+        height: 250px;
+        width: 250px;
+    }
+    .grid-item-pricing  { 
+        width: 100%;
+    }
+    .footer-bottom{
+        .footer-bottom-text{
+            font-size: 1.1rem;
+        }
+    }
+    .filter-wrapper li {
+        margin: 0.1rem 0;
+    }
+    .img-result-wrapper .fa-5x {
+        font-size: 3.5em;
+    }
+
+}
+
+
+
+/* Small phones to small tablets: from 576px to 767px  and landscape orientation */
+@media only screen and (max-width: 767px) and (orientation:landscape) {
+
+}
+
+
+
+
+
+
+
+

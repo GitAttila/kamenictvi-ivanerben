@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="Kamenictví Ivan Erben nabízí řemeslnou kamenickou a sochařskou práci na zakázku. Specializujeme se hlavně na výrobu náhrobních kamenů a hrobů, zakázkové pomníky a resturátorské práce. Hroby a náhrobní kameny vyrábíme dle specifickým požadavků klienta s cílem vytvoŘení originálního a neopakovatelného díla, které má reprezentovat životní cestu zesnulého.">
+      <meta name="keywords"
+            content="kamenictví,Ivan Erben,kamenářske,sochařské,práce,náhrobní,kameny,kamen v zahrade,ploty,ceník,hroby,pomníky,kolín,praha,kutná hora,kámen,řemeselná práce"/>
+      <meta name="author" content="AHAstudio">
+      <link rel="icon" href="">
+      <title>Kamenictví Ivan Erben | Náhrobní kameny a pomníky | Hrob | Sochařské práce | Kamenné ploty | Praha | Kolín | Pardubice | Hradec Králové | Ceník</title>
+      
+      <!-- animate.min.css styles -->
+      <!-- build:css ./assets/styles/animate.min.css -->
+      <link href="temp/styles/animate.min.css" rel="stylesheet">
+      <!-- endbuild -->
+      
+      <!-- Custom styles for this template -->
+      <!-- build:css ./assets/styles/sitestyles.css -->
+      <link href="temp/styles/sitestyles.css" rel="stylesheet">
+      <!-- endbuild -->
+   </head>
+   <body>
+
+      <nav class="navbar navbar-toggleable-md fixed-top navbar-custom-light shadowed-down">
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html">
+               <h2 class="logo-font" data-lang="main-logo">ivan<strong>&nbsp;erben</strong></h2>
+               <h1 data-lang="sub-logo">kamenické a sochařské práce</h1>
+            </a>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+               <div class="navbar-nav">
+                  <a class="nav-item nav-link active" href="index.html" data-lang="menu1">Úvod<span class="sr-only">(current)</span></a>
+                  <a class="nav-item nav-link" href="about.html" data-lang="menu2">O nás</a>
+                  <a class="nav-item nav-link" href="realisations.html" data-lang="menu3">Realizace</a>
+                  <a class="nav-item nav-link" href="contact.html" data-lang="menu4">Kontakt</a>
+               </div>
+            </div>
+
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="icon-bar top-bar"></span>
+                  <span class="icon-bar middle-bar"></span>
+                  <span class="icon-bar bottom-bar"></span>
+            </button>
+            <div class="lang-switcher">
+               <a>cz</a>
+            </div> 
+
+         </div> <!-- END of container -->
+      </nav>
+
+      <div id="ajax-content">
+         <div id="ajax-container">
+         
+            <div class="btn-wrapper">
+               <div class="btn-icon-round btn-move-up">
+                  <i class="fa fa-angle-up" aria-hidden="true"></i>
+               </div>
+            </div>
+
+            <div id="contact-map-wrapper">
+               <div id="contact-map">
+               </div>
+               <div class="btn-icon-round btn-map">
+                  <i class="fa fa-expand" aria-hidden="true"></i>
+               </div>
+            </div>
+            
+            <section id="contact-section">
+               
+               <div class="container">
+                  <h2 class="display-3 section-header headline-font" data-lang="contact-title">Kontaktní údaje</h2>
+
+                  <div class="row">
+
+                     <div class="col-md-5 col-sm-12 col-xs-12">
+                        <div class="row">
+                           <div class="col-md-12 col-sm-6 col-xs-12">
+                              <h3 data-lang="address-title">ADRESA</h3>
+                              <address>
+                                 <p>Veltrubská 533<br>
+                                 Kolín 280 02</p>
+                              </address>
+                              <h3 data-lang="email-phone-title">E-MAIL/TELEFON</h3>
+                              <p>info@kamenictvi-erben.cz<br>
+                                 ++420 725 740 725</p>
+                           </div>
+                           <div class="col-md-12 col-sm-6 col-xs-12 hidden-xs-down">
+                              <div class="contact-qr">
+                                 <img src="assets/images/IE_qrcode_lightgrey.png" alt="qr-code kontakt">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-md-7 col-sm-12 col-xs-12">
+                        <form id="contact-form">
+                           <div class="row">
+                              <div class="col-xs-12 col-sm-6">
+                                 <input 
+                                    type="text" 
+                                    name="contact-name" 
+                                    class="site-form-control"
+                                    placeholder="&#42;jméno"
+                                    data-lang="form-name" 
+                                    aria-required="true" 
+                                    aria-invalid="false">
+                                 <div class = "alert alert-danger" role="alert" data-error-id="contact-name">Some error!</div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6">
+                                 <input 
+                                    type="text" 
+                                    name="contact-phone" 
+                                    class="site-form-control"
+                                    placeholder="telefon"
+                                    data-lang="form-phone"
+                                    aria-invalid="false">
+                                 <div class = "alert alert-danger" role="alert" data-error-id="contact-phone">Some error!</div>
+                              </div>
+                           </div>
+                           
+                           <span class="your-email">
+                              <input 
+                                 type="text" 
+                                 name="contact-email" 
+                                 size="40" 
+                                 class="site-form-control" 
+                                 placeholder="&#42;email"
+                                 data-lang="form-email"
+                                 aria-required="true" 
+                                 aria-invalid="false">
+                              <div class = "alert alert-danger" role="alert" data-error-id="contact-email">Some error!</div>
+                           </span>
+                     
+                           <span class="your-message">
+                              <textarea 
+                              name="contact-message" 
+                              cols="40" 
+                              rows="10" 
+                              class="site-form-control" 
+                              placeholder="&#42;zpráva"
+                              data-lang="form-msg"
+                              aria-required="true" 
+                              aria-invalid="false"></textarea>
+                              <div class = "alert alert-danger" role="alert" data-error-id="contact-message">Some error!</div>
+                           </span>
+                        
+                           <div class="btn-site btn-site-100" role="button" data-lang="send-button">Poslat zprávu</div>
+                           <div class="alert alert-success" role="alert" id="send-result">Some error!</div>
+
+                        </form>
+                     </div>
+
+                  </div>
+               
+               </div><!-- /.container -->
+
+               <footer>
+                  <div class="container">
+                     <div class="row align-items-center">
+                        <div class="col-xs-12 col-md-6">
+                           <div class="copyright-msg">
+                              2016 &copy; <span data-lang="footer-msg">Kamenictví Ivan Erben. Všechna práva vyhrazena.</span>
+                           </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                           <div class="social-media">
+                              <a href="https://plus.google.com/u/0/111679694916893700965" class="color-googleplus" role="button" target="_blank">
+                                 <i class="fa fa-2x fa-google-plus" aria-hidden="true"></i>
+                              </a>
+                              <a href="https://www.facebook.com/Kamenictvi-Erben-276231399480893/" class="color-facebook" role="button" target="_blank">
+                                 <i class="fa fa-2x fa-facebook" aria-hidden="true"></i>
+                              </a>
+                              <a href ="https://www.instagram.com/kamenictvierben/" class="color-instagram" role="button" target="_blank">
+                                 <i class="fa fa-2x fa-instagram" aria-hidden="true"></i>
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="footer-bottom">
+                     <div class="container">
+                        <div class="footer-bottom-text">
+                        Praha | Kolín | Kutná Hora | Nymburk | Poděbrady
+                        </div>
+                     </div>
+                  </div>
+            </footer>
+
+            </section>
+
+         </div> <!-- end of AJAX container -->
+      </div> <!-- end of AJAX content -->      
+
+       <!-- Vendors JavaScript files
+      ================================================== -->
+
+      <!-- build:js ./assets/js/jquery-2.2.4.min.js -->
+      <script src="temp/js/jquery-2.2.4.min.js"></script>
+      <!-- endbuild -->
+
+      <!-- build:js ./assets/js/vendorscripts.js -->
+      <script src="temp/js/vendorscripts.js"></script>
+      <!-- endbuild -->
+
+      <script src="temp/js/debug.addIndicators.min.js"></script> <!--  comment out in the production version  -->
+
+      <!-- Custom JavaScript files
+      ================================================== -->
+      
+      <!-- build:js ./assets/js/scripts.js -->
+      <script src="temp/js/scripts.js" type="text/javascript"></script>
+      <!-- endbuild -->
+      
+      <!-- Google Map Initialization
+      ================================================== -->
+      <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkyPpYrbOaPJ361hTS5PrJOiUAON36r2k&callback=initContactMap">
+      </script>
+      
+   </body>
+</html>
