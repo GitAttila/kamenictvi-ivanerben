@@ -63,11 +63,15 @@ gulp.task('usemin',['deleteDistFolder','styles','scripts'],function(){
 	return gulp.src("./website/*.html")
 		.pipe(usemin({
 			css: [function(){return rev()}],
-			js: [function(){return rev()}] 
+			js: [function(){return rev()}]
 		}))
+		.on('error',function(errorInfo){
+				console.log(errorInfo.toString());
+				this.emit('end');
+			})
 		.pipe(gulp.dest('./dist'));
 });
 
-gulp.task('build',['deleteDistFolder','usemin','images', 'copyGeneralFiles']);
+gulp.task('build',['deleteDistFolder','usemin', 'copyGeneralFiles']); //'images'
 
 gulp.task('default',['build']);

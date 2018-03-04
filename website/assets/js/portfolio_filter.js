@@ -1,7 +1,8 @@
 // ---------- PORTFOLIO FILTER ----------
 
 	function initCommisionsGallery(callbackFunc){
-		var callbackFunc = callbackFunc || function(){};
+		typeof callbackFunc==="function" ? callbackFunc = callbackFunc : callbackFunc = function(){};
+
 		var brokenCount = 0;
 
 		$(".grid-item>.img-result-wrapper").hide();
@@ -11,12 +12,12 @@
 		$('#portfolios').imagesLoaded()
 		  .always( function( instance ) {
 		    console.log("all images of 'Commisions menu' loaded");
-		   
+
 			instantiateIsotopeGallery(".grid",{
 		  		itemSelector: '.grid-item',
 		  		stagger: 30
 			});
-		    
+
 		    buildImgCategories("#filter-portfolio","#portfolio-gallery .grid-item");
 		    placeFilterListeners(".grid");
 
@@ -51,7 +52,8 @@
 		});
 	}
 
-	function initPricingGallery(){
+	function initPricingGallery(callbackFunc){
+		typeof callbackFunc==="function" ? callbackFunc = callbackFunc : callbackFunc = function(){};
 
 		var brokenCount = 0;
 		$(".grid-pricing>.grid-item-pricing").addClass("hover-off");
@@ -68,6 +70,8 @@
 		    	buildImgCategories("#filter-pricelist","#pricing-gallery .grid-item-pricing");
 		    	placeFilterListeners(".grid-pricing");
 		    	$(".grid-pricing>.grid-item-pricing").removeClass("hover-off");
+
+					callbackFunc();
 
 		  	})
 		  	.done( function() {
@@ -113,7 +117,7 @@
 				});
 			}
 		})
-		
+
 		$buttons.addClass("filter-wrapper");
 		$("<li/>").appendTo($buttons);
 
@@ -142,7 +146,7 @@
 	};
 
 	function placeFilterListeners(gridEl) {   // ".grid"
-	    $('.filter-wrapper').on( 'click', '.filter-item', function() { 
+	    $('.filter-wrapper').on( 'click', '.filter-item', function() {
 	    	var filterValue = $(this).data('lang');
 	    	 // console.log("--------");
 	    	 // console.log(filterValue);
@@ -152,23 +156,23 @@
 				  	filter: function() {
 				  		return true;
 			  	  	}
-				});
+					});
 	    	} else {
-				$(gridEl).isotope({
-				  	filter: function() {
-				  		tagText= $(this).data('portfolioTags');
-				  		found = tagText.search(filterValue);
-					  	if (found> -1) {
-					  		return true
-					  	}   else {
-					  		return false	 		  	
-					  	}
-			  	  	}
-				});
-			}
+					$(gridEl).isotope({
+					  	filter: function() {
+					  		tagText= $(this).data('portfolioTags');
+					  		found = tagText.search(filterValue);
+						  	if (found> -1) {
+						  		return true
+						  	}   else {
+						  		return false
+						  	}
+				  	  	}
+					});
+				}
 	    });
 
-		$(gridEl + ' .grid-item').on( 'click', function(e) { 
+		$(gridEl + ' .grid-item').on( 'click', function(e) {
 			e.preventDefault();
 			if ($(this).hasClass('grid-item-selected')) {
 				$(this).removeClass('grid-item-selected');
@@ -180,4 +184,5 @@
 			// console.log('grid item clicked');
 			// console.log($(this));
 		});
+
 	}

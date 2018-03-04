@@ -22,7 +22,7 @@
 					}
 				}
 				return result;
-			}(); 
+			}();
 		},
 		switchLang: function(switchToLang){
 			self = this;
@@ -37,6 +37,7 @@
 					} else {
 						$($("[data-lang]")[i]).text(LNG$(switchToLang).getKeyVal(retrievedDataTag)).animateCss('pulse');
 					}
+					$($("[data-lang]")[i]).css("visibility","visible");
 				}
 			}
 		}
@@ -53,16 +54,16 @@
 
 	getServerData(URL,function(data){
 		Lang.data = data;
-		var initLang = $(".lang-switcher a").text().trim();
+		var initLang = $(".lang-switcher>span").text().trim();
 		LNG$(initLang).switchLang(initLang);
 	});
 
 	function getServerData(url, callbackFunc) {
 	var result = $.getJSON(url, function() {
-					console.log( "--- success ---" );
+					//console.log( "--- success ---" );
 				})
 				.done(function(data) {
-					console.log( "--- second success ---" );
+					console.log( "lang data loaded..." );
 					//console.log(data);
 					callbackFunc(data);
 				})

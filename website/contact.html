@@ -11,12 +11,12 @@
       <meta name="author" content="AHAstudio">
       <link rel="icon" href="">
       <title>Kamenictví Ivan Erben | Náhrobní kameny a pomníky | Hrob | Sochařské práce | Kamenné ploty | Praha | Kolín | Pardubice | Hradec Králové | Ceník</title>
-      
+
       <!-- animate.min.css styles -->
       <!-- build:css ./assets/styles/animate.min.css -->
       <link href="temp/styles/animate.min.css" rel="stylesheet">
       <!-- endbuild -->
-      
+
       <!-- Custom styles for this template -->
       <!-- build:css ./assets/styles/sitestyles.css -->
       <link href="temp/styles/sitestyles.css" rel="stylesheet">
@@ -48,19 +48,13 @@
             </button>
             <div class="lang-switcher">
                <a>cz</a>
-            </div> 
+            </div>
 
          </div> <!-- END of container -->
       </nav>
 
       <div id="ajax-content">
          <div id="ajax-container">
-         
-            <div class="btn-wrapper">
-               <div class="btn-icon-round btn-move-up">
-                  <i class="fa fa-angle-up" aria-hidden="true"></i>
-               </div>
-            </div>
 
             <div id="contact-map-wrapper">
                <div id="contact-map">
@@ -69,10 +63,10 @@
                   <i class="fa fa-expand" aria-hidden="true"></i>
                </div>
             </div>
-            
+
             <section id="contact-section">
-               
-               <div class="container">
+
+               <div class="container" id="pointToJumpFromTop">
                   <h2 class="display-3 section-header headline-font" data-lang="contact-title">Kontaktní údaje</h2>
 
                   <div class="row">
@@ -86,8 +80,8 @@
                                  Kolín 280 02</p>
                               </address>
                               <h3 data-lang="email-phone-title">E-MAIL/TELEFON</h3>
-                              <p>info@kamenictvi-erben.cz<br>
-                                 ++420 725 740 725</p>
+                              <p><span data-lang="email-contact">info@kamenictvi-erben.cz</span><br>
+                                 <span data-lang="mobile-contact">++420 725 740 725</span></p>
                            </div>
                            <div class="col-md-12 col-sm-6 col-xs-12 hidden-xs-down">
                               <div class="contact-qr">
@@ -101,20 +95,20 @@
                         <form id="contact-form">
                            <div class="row">
                               <div class="col-xs-12 col-sm-6">
-                                 <input 
-                                    type="text" 
-                                    name="contact-name" 
+                                 <input
+                                    type="text"
+                                    name="contact-name"
                                     class="site-form-control"
                                     placeholder="&#42;jméno"
-                                    data-lang="form-name" 
-                                    aria-required="true" 
+                                    data-lang="form-name"
+                                    aria-required="true"
                                     aria-invalid="false">
                                  <div class = "alert alert-danger" role="alert" data-error-id="contact-name">Some error!</div>
                               </div>
                               <div class="col-xs-12 col-sm-6">
-                                 <input 
-                                    type="text" 
-                                    name="contact-phone" 
+                                 <input
+                                    type="text"
+                                    name="contact-phone"
                                     class="site-form-control"
                                     placeholder="telefon"
                                     data-lang="form-phone"
@@ -122,33 +116,33 @@
                                  <div class = "alert alert-danger" role="alert" data-error-id="contact-phone">Some error!</div>
                               </div>
                            </div>
-                           
+
                            <span class="your-email">
-                              <input 
-                                 type="text" 
-                                 name="contact-email" 
-                                 size="40" 
-                                 class="site-form-control" 
+                              <input
+                                 type="text"
+                                 name="contact-email"
+                                 size="40"
+                                 class="site-form-control"
                                  placeholder="&#42;email"
                                  data-lang="form-email"
-                                 aria-required="true" 
+                                 aria-required="true"
                                  aria-invalid="false">
                               <div class = "alert alert-danger" role="alert" data-error-id="contact-email">Some error!</div>
                            </span>
-                     
+
                            <span class="your-message">
-                              <textarea 
-                              name="contact-message" 
-                              cols="40" 
-                              rows="10" 
-                              class="site-form-control" 
+                              <textarea
+                              name="contact-message"
+                              cols="40"
+                              rows="10"
+                              class="site-form-control"
                               placeholder="&#42;zpráva"
                               data-lang="form-msg"
-                              aria-required="true" 
+                              aria-required="true"
                               aria-invalid="false"></textarea>
                               <div class = "alert alert-danger" role="alert" data-error-id="contact-message">Some error!</div>
                            </span>
-                        
+
                            <div class="btn-site btn-site-100" role="button" data-lang="send-button">Poslat zprávu</div>
                            <div class="alert alert-success" role="alert" id="send-result">Some error!</div>
 
@@ -156,7 +150,7 @@
                      </div>
 
                   </div>
-               
+
                </div><!-- /.container -->
 
                <footer>
@@ -194,7 +188,8 @@
             </section>
 
          </div> <!-- end of AJAX container -->
-      </div> <!-- end of AJAX content -->      
+
+      </div> <!-- end of AJAX content -->
 
        <!-- Vendors JavaScript files
       ================================================== -->
@@ -211,16 +206,10 @@
 
       <!-- Custom JavaScript files
       ================================================== -->
-      
+
       <!-- build:js ./assets/js/scripts.js -->
       <script src="temp/js/scripts.js" type="text/javascript"></script>
       <!-- endbuild -->
-      
-      <!-- Google Map Initialization
-      ================================================== -->
-      <script async defer
-         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkyPpYrbOaPJ361hTS5PrJOiUAON36r2k&callback=initContactMap">
-      </script>
-      
+
    </body>
 </html>

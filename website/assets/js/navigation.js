@@ -24,87 +24,151 @@ $(function(global){
 	}
 
 	function navMenuInit() {
-	    
-	    $('#mainNavbar').on('show.bs.collapse', function () {
-  			$(".hamburger__menu-icon").addClass("hamburger__menu-icon--close-x");
-		})
- 		$('#mainNavbar').on('hide.bs.collapse', function () {
-  			$(".hamburger__menu-icon").removeClass("hamburger__menu-icon--close-x");
-		})
+			var cachedPage={};
+			$cachedItems = $("#mainNavbar [data-menuitem]");
+			$($cachedItems).each(function(index,value){
+				cachedPage[$(value).data('menuitem')] = "";
+			});
+			global.mySite.cachedPage = cachedPage;
+
+			placeButtonMoveUpListener();
+			placeLangSwitchListener(true);
+
+			//helper function to load google maps script
+			function addScript( src, el,callbackF ) {
+				if (typeof callbackF!=="function") {
+					callbackF=function(){};
+				}
+				$(el).append($("<script />", {
+  				src: src,
+					async: true,
+					defer: true
+				}));
+				callbackF();
+			}
+			//helper function to update the page when clicking on menu
+			function updatePage(callbackFunc){
+				if (typeof callbackFunc!== 'function') {
+						callbackFunc = function(){};
+				}
+				$('#ajax-container').show();
+				$('#ajax-content').hide();
+				$('.loader-wrapper').hide();
+				$('#ajax-content').show();
+				$('#ajax-content').fadeIn(500,function(){
+					callbackFunc();
+				});
+			}
+
+		  $('#mainNavbar').on('show.bs.collapse', function () {
+	  			$(".hamburger__menu-icon").addClass("hamburger__menu-icon--close-x");
+			})
+	 		$('#mainNavbar').on('hide.bs.collapse', function () {
+	  			$(".hamburger__menu-icon").removeClass("hamburger__menu-icon--close-x");
+			})
 
 	    $('.nav-link').on( 'click', function(e) {
 	        e.preventDefault();
-	        var url = this.href.trim().toLowerCase();   
-	        var menuName = this.pathname.trim().toLowerCase();
-			
+	        var url = this.href.trim().toLowerCase();
+	        var menuName = $(this).data('menuitem').trim().toLowerCase();
+					var initLang = $(".lang-switcher>span").text().trim();
+
 	        $(this).siblings(".nav-link").removeClass("active");
 	        $(this).addClass("active");
 
-			if (controller!==undefined && controller!==null) {
-				controller = controller.destroy(true);
-			}
-	        //console.log("url :  " + url);
-	        //console.log(menuName); 
+					if (controller!==undefined && controller!==null) {
+						controller = controller.destroy(true);
+					}
 
-			//close the mobile menu if it is opened
-			$('#mainNavbar').collapse('hide');
+					//close the mobile menu if it is opened
+					$('#mainNavbar').collapse('hide');
+
 	        $('.loader-wrapper').show();
+	        $('#ajax-container').fadeOut(500, function(){
 
-	        $('#ajax-container').animateCss('fadeOutDown', function(){
-	        	
-	        	var self = this;
 	        	$("body,html").stop().animate({scrollTop:0}, '50');
+						$(this).remove();
 
-	        	$('#ajax-content').load(url + ' #ajax-container', function(result,status){
-	        		
-	        		if (status === "success") {
-					
-						$(self).remove();
-	        			$('#ajax-content').hide();
-		        		$('.loader-wrapper').hide();
-		        		$('#ajax-content').show();
-		        		$('#ajax-content').animateCss('fadeInUp');
-		        		
-		        		placeContactListeners();
-		        		placeButtonMoveUpListener();
-		        		placeLangSwitchListener(true);
-		        		if (menuName.search("realisations.html")>-1) {
-		        			initCommisionsGallery();
-		        		} else if (menuName.search("contact.html")>-1) {
-		        			initContactMap();
-		        			initContactFormListener();
-		        		} else if (menuName.search("index.html")>-1) {
-		        			initCarousels();
-		        			linkToGallery();
-		        			if (!isMobileFlag) {
-					        	controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-					        	parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
-					            	.setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
-					            	//.addIndicators()
-					            	.addTo(controller);
-					        }
+						if (mySite.cachedPage[menuName]==='') {
+							// do the following if the page needs to be laoded for the first time(not cached yet)
+							// start of the ajax load function
+		        	$('#ajax-content').load(url + ' #ajax-container', function(result,status){
+								if (status === "success") {
+									console.log("Loaded '" + menuName + "' from SERVER...");
+									updatePage(function(){
+										LNG$(initLang).switchLang(initLang);
+									});
 
-		        		} else if (menuName.search("about.html")>-1) {
-		        			initCarousels();
-		        			if (!isMobileFlag) {
-			        			controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-			        			parallax2 = new ScrollMagic.Scene({triggerElement: "#parallax2"})
-							    	.setTween("#parallax2 > div", {y: "50%", ease: Linear.easeNone})
-							    	//.addIndicators()
-							    	.addTo(controller);
-							}
-		        		} else if (menuName.search("pricing.html")>-1) {
-		        			initPricingGallery();
+			        		if (menuName==="realisations") {
+										cachedPage[menuName]=$(result).find("#ajax-container");
+			        			initCommisionsGallery(function(){
+												LNG$(initLang).switchLang(initLang);
+										});
+			        		} else if (menuName==="contact") {
+										cachedPage[menuName]=$(result).find("#ajax-container");
+										addScript( // kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
+											"https://maps.googleapis.com/maps/api/js?key=AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4&callback=initContactMap",
+											"body",
+											function(){
+												$(function(){
+												   $(window).load(function(){
+														 	initContactMap();
+															initContactFormListener();
+															placeContactListeners();
+												   });
+												});
+
+											});
+
+			        		} else if (menuName==="main") {
+										cachedPage[menuName]=$(result).find("#ajax-container");
+			        			initCarousels();
+			        			linkToGallery();
+			        			if (!isMobileFlag) {
+						        	controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
+						        	parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
+						            	.setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
+						            	//.addIndicators()
+						            	.addTo(controller);
+						        }
+
+			        		} else if (menuName==="about") {
+										cachedPage[menuName]=$(result).find("#ajax-container");
+			        			initCarousels();
+			        			if (!isMobileFlag) {
+				        			controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
+				        			parallax2 = new ScrollMagic.Scene({triggerElement: "#parallax2"})
+								    	.setTween("#parallax2 > div", {y: "50%", ease: Linear.easeNone})
+								    	//.addIndicators()
+								    	.addTo(controller);
+										}
+			        		} else if (menuName==="pricing") {
+										cachedPage[menuName]=$(result).find("#ajax-container");
+			        			initPricingGallery(function(){
+											LNG$(initLang).switchLang(initLang);
+										});
+			        		}
+		        		} else if (status === "error") {
+		        			$('.loader-wrapper').hide();
+		        			console.log("Error loading from server...");
 		        		}
-	        		} else if (status === "error") {
-	        			$('.loader-wrapper').hide();
-	        			console.log("Error loading from server...");
-	        		}
-	        	}); // end of ajax load function
+
+		        	}); // end of ajax load function
+
+						} else {
+							//if the page is already cached...
+							console.log("Loaded '" + menuName + "' from CACHE...");
+							$(mySite.cachedPage[menuName]).appendTo('#ajax-content');
+
+							updatePage(function(){
+								LNG$(initLang).switchLang(initLang);
+							});
+
+						}
 	        });  // end of animateCss function
 
 	    }); // end of click listener
-	   
+
 	}
 
 	function placeContactListeners() {
@@ -168,14 +232,14 @@ $(function(global){
 	}
 
 	function placeButtonMoveUpListener() {
-		
+
 		var offSetY=0;
 		$(window).on("scroll", function(){
 			var actualHeight = $(window).height();
 			var actualScrollPos = $(window).scrollTop();
 
 			offSetY = actualHeight/5;
-			
+
 			if (actualScrollPos<0) {actualScrollPos=0};
 
 			//console.log(actualHeight,actualScrollPos);
@@ -189,7 +253,7 @@ $(function(global){
 						//$(".btn-down").animateCss('bounceIn');
 					});
 				}
-				
+
 			} else {
 				if (!$('.btn-move-up').is(":visible")) {
  					$(".btn-down").animateCss('bounceOut',function(){
@@ -204,33 +268,62 @@ $(function(global){
 			$("body,html").stop().animate({scrollTop:0}, '700', "swing");
 		});
 		$(".btn-down").on("click", function(e){
-			console.log(e);
 			e.preventDefault();
 			var jumpHash = e.currentTarget.hash;
 			var jumpPoint = $(jumpHash).offset().top;
 			$("body,html").stop().animate({scrollTop:jumpPoint}, '700', "swing");
 		});
-		
+
 	}
 
 	function placeLangSwitchListener(update) {
 		var update = update || false;
+		var activeLanguages =[];
+		var languages = {
+			"cz":false,
+			"fr":false,
+			"en":true,
+			"de":true,
+			"es":false
+		};
+		$.each(languages, function(index,value){
+			if (value) {
+				activeLanguages.push(index);
+			}
+		})
 		var activeLang = $(".lang-switcher>span").text().trim();
-
-		if (update) {LNG$(activeLang).switchLang(activeLang);}
+		if (update) {
+			LNG$(activeLang).switchLang(activeLang);
+		}
 
 		$(".lang-switcher>span").on("click", function(){
-			if (activeLang === "cz") {
-				activeLang = "en";
-				$(".lang-switcher>span").text(activeLang);
-				LNG$(activeLang).switchLang(activeLang);
-			} else if (activeLang === "en") {
-				activeLang = "cz";
-				$(".lang-switcher>span").text(activeLang);
-				LNG$(activeLang).switchLang(activeLang);
+			var next = activeLanguages.indexOf(activeLang)+1;
+			if (!isLangDefined(activeLanguages,activeLang)) {
+				return;
 			}
+			next === activeLanguages.length ? next=0 : next=next;
+			activeLang = activeLanguages[next];
+			$(".lang-switcher>span").text(activeLang);
+			LNG$(activeLang).switchLang(activeLang);
 			$(this).animateCss("bounceIn");
 		});
+
+		function isLangDefined(activeLangs,langToCheck){
+			if (typeof activeLangs !=='object') {
+				activeLangs = activeLangs || [];
+			}
+			if (typeof langToCheck !=='string') {
+				langToCheck = langToCheck || "";
+			}
+			var isDefined = false;
+			var ind = activeLangs.indexOf(activeLang);
+			if (ind === -1) {
+				console.log("error: language: '"+ langToCheck +"' within 'index.html' file is not compatible with languages defined.");
+			} else {
+				isDefined = true;
+			}
+			return isDefined;
+		}
 	}
 
 	function linkToGallery(){
@@ -244,14 +337,13 @@ $(function(global){
 			} else {
 				url = url + "realisations.html";
 			}
-			//console.log("url : "+ url);
 
 	        $('#ajax-container').animateCss('fadeOutDown', function(){
 	        	$('#ajax-content').hide();
 	        	$('#ajax-content').load(url + ' #ajax-container', function(){
 	        		$(".navbar-nav>.nav-link").removeClass("active");
 	        		$(".navbar-nav>.nav-link[href='realisations.html']").addClass("active");
-	        		
+
 	        		$('#ajax-content').show();
 	        		$('#ajax-content').animateCss('fadeInUp');
 	        		placeContactListeners();
@@ -271,21 +363,25 @@ $(function(global){
 		});
 	}
 
-	if (!isMobileFlag) {
-        var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-        var parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
-            .setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
-            //.addIndicators()
-            .addTo(controller);
-    }
+	function initParallax() {
+		if (!isMobileFlag) {
+	        var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
+	        var parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
+	            .setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
+	            //.addIndicators()
+	            .addTo(controller);
+	    }
+	}
 
+	$(window).load(function(){
+		linkToGallery();
+		navMenuInit();
+		placeContactListeners();
+		placeButtonMoveUpListener();
+		placeLangSwitchListener();
+		initParallax();
+	});
 
-	linkToGallery();
-	navMenuInit();
-	placeContactListeners();
-	placeButtonMoveUpListener();
-	placeLangSwitchListener();
-	//initParallax();
 
 	global.mySite.navMenuInit = navMenuInit;
 	global.mySite.placeContactListeners = placeContactListeners;

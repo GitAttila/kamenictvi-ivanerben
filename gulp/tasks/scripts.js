@@ -7,12 +7,13 @@ var gulp = require("gulp"),
 //Scripts
 gulp.task('scripts',['vendorscripts','phpscripts','JSONdatafiles'], function(){
 	return gulp.src('./website/assets/js/**/*.js')
+
+		.pipe(sourcemaps.init())
+		.pipe(uglify())
 		.on('error',function(errorInfo){
 				console.log(errorInfo.toString());
 				this.emit('end');
 			})
-		.pipe(sourcemaps.init())
-		.pipe(uglify())
 		.pipe(concat('scripts.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('./website/temp/js'))

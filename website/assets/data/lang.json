@@ -21,7 +21,7 @@
     "datatag": "menu2",
     "en": "About",
     "cz": "O Nás",
-    "de": "Über (uns)"
+    "de": "Über uns"
     },
     {
     "datatag": "menu3",
@@ -318,6 +318,18 @@
     "de": "ADRESSE"
     },
     {
+    "datatag": "mobile-contact",
+    "en": "++german number",
+    "cz": "++420 725 740 725",
+    "de": "++german-number"
+    },
+    {
+    "datatag": "email-contact",
+    "en": "info@steinmetz-erben.de",
+    "cz": "info@kamenictvi-erben.cz",
+    "de": "info@steinmetz-erben.de"
+    },
+    {
     "datatag": "email-phone-title",
     "en": "E-MAIL/PHONE",
     "cz": "E-MAIL/TELEFON",
@@ -430,5 +442,83 @@
     "en": "Art works",
     "cz": "Volná tvorba",
     "de": "Freie Schöpfung"
+    },
+    {
+    "datatag": "50000Kc",
+    "en": "2000 EUR",
+    "cz": "50 000 Kč",
+    "de": "2000 EUR"
+    },
+    {
+    "datatag": "70000Kc",
+    "en": "2800 EUR",
+    "cz": "70 000 Kč",
+    "de": "2800 EUR"
+    },
+    {
+    "datatag": "90000Kc",
+    "en": "3600 EUR",
+    "cz": "90 000 Kč",
+    "de": "3600 EUR"
+    },
+    {
+    "datatag": "150000Kc",
+    "en": "6000 EUR",
+    "cz": "150 000 Kč",
+    "de": "6000 EUR"
+    },
+    {
+    "datatag": "180000Kc",
+    "en": "7200 EUR",
+    "cz": "180 000 Kč",
+    "de": "7200 EUR"
+    },
+    {
+    "datatag": "80000Kc",
+    "en": "7200 EUR",
+    "cz": "180 000 Kč",
+    "de": "7200 EUR"
+    },
+    {
+    "datatag": "1500000Kc",
+    "en": "60 000 EUR",
+    "cz": "1 500 000 Kč",
+    "de": "60 000 EUR"
+    },
+    {
+    "datatag": "750000Kc",
+    "en": "30 000 EUR",
+    "cz": "750 000 Kč",
+    "de": "30 000 EUR"
+    },
+    {
+    "datatag": "200000Kc",
+    "en": "8 000 EUR",
+    "cz": "200 000 Kč",
+    "de": "8 000 EUR"
+    },
+    {
+    "datatag": "300000Kc",
+    "en": "12 000 EUR",
+    "cz": "300 000 Kč",
+    "de": "12 000 EUR"
+    },
+    {
+    "datatag": "400000Kc",
+    "en": "16 000 EUR",
+    "cz": "400 000 Kč",
+    "de": "16 000 EUR"
+    },
+    {
+    "datatag": "350000Kc",
+    "en": "14 000 EUR",
+    "cz": "350 000 Kč",
+    "de": "14 000 EUR"
+    },
+    {
+    "datatag": "120000Kc",
+    "en": "4 800 EUR",
+    "cz": "120 000 Kč",
+    "de": "4 800 EUR"
     }
 ]
