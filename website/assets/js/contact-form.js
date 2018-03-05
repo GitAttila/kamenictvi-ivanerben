@@ -1,78 +1,81 @@
-function initContactFormListener() {
-    
-    //console.log("inside of a function InitFormListener");
-    
-    $("#contact-form .btn-site").on( "click", function() {
-        //console.log("click event: .contact-submit button");
-        $( "#contact-form" ).submit();
-    });
+var ContactFormModule = (function() {
 
-    $("#contact-form").submit(function(e) {
-        e.preventDefault();
+    var initContactFormListener = function(){
 
-        console.log("Form submitted listener called");
+        $("#contact-form .btn-site").on( "click", function() {
+            //console.log("click event: .contact-submit button");
+            $( "#contact-form" ).submit();
+        });
 
-        var inputElements = $("#contact-form").find('input, textarea, select');
-        var formValues = {};
+        $("#contact-form").submit(function(e) {
+            e.preventDefault();
 
-        inputElements.each(function() {
-            if (this.name) {
-                if (this.type == "checkbox" || this.type == "radio") {
-                    if (this.checked) {
+            console.log("Form submitted listener called");
+
+            var inputElements = $("#contact-form").find('input, textarea, select');
+            var formValues = {};
+
+            inputElements.each(function() {
+                if (this.name) {
+                    if (this.type == "checkbox" || this.type == "radio") {
+                        if (this.checked) {
+                            formValues[this.name] = this.value;
+                        }
+                    }else {
                         formValues[this.name] = this.value;
                     }
-                }else {
-                    formValues[this.name] = this.value;
                 }
-            }
-        });
-        
-        console.log("formValues : " + JSON.stringify(formValues));
+            });
 
-        $.ajax({
-            url: "assets/php/handleajaxform.php",
-            method: "POST",
-            data: formValues,
-            success: function(result) {
+            console.log("formValues : " + JSON.stringify(formValues));
 
-                console.log("AJAX post result result : " + JSON.stringify(result));
+            $.ajax({
+                url: "assets/php/handleajaxform.php",
+                method: "POST",
+                data: formValues,
+                success: function(result) {
 
-                $('div[data-error-id]').text("");
-                $('#contact-form input, #contact-form textarea').removeClass('form-error');
-                $('#send-result').text("");
+                    console.log("AJAX post result result : " + JSON.stringify(result));
 
-                if (Object.keys(result.errors).length > 0) {
-                    for (var inputName in result.errors) {
-                        console.log("error in " + inputName + ": " + result.errors[inputName]);
+                    $('div[data-error-id]').text("");
+                    $('#contact-form input, #contact-form textarea').removeClass('form-error');
+                    $('#send-result').text("");
 
-                        $('div[data-error-id="' + inputName + '"]').text(result.errors[inputName]).hide().slideDown();
-                        $('*[name="' + inputName + '"]').addClass('form-error');
-                        $('*[name="' + inputName + '"]').animateCss('shake');
+                    if (Object.keys(result.errors).length > 0) {
+                        for (var inputName in result.errors) {
+                            console.log("error in " + inputName + ": " + result.errors[inputName]);
+
+                            $('div[data-error-id="' + inputName + '"]').text(result.errors[inputName]).hide().slideDown();
+                            $('*[name="' + inputName + '"]').addClass('form-error');
+                            $('*[name="' + inputName + '"]').animateCss('shake');
+                        }
+                    }else {
+                        console.log("All validation passed succesfully!");
+
+                        $("#send-result").text("Thank you. Your message has been sent.");
+                        $("#send-result").removeClass('alert-danger').addClass('alert-success');
+
+                        $("#send-result").show().animateCss('bounceIn', function(){
+                            $('input').val("");
+                            $('textarea').val("");
+                            $("#send-result").delay(5000).slideUp();
+                        });
                     }
-                }else {
-                    console.log("All validation passed succesfully!");
+                },
+                error: function() {
+                    $("#send-result").removeClass('alert-success');
+                    $("#send-result").addClass('alert-danger');
+                    $("#send-result").text("Sorry... Your message could not have been delivered.");
+                    $("#send-result").slideDown();
 
-                    $("#send-result").text("Thank you. Your message has been sent.");
-                    $("#send-result").removeClass('alert-danger').addClass('alert-success');
-                    
-                    $("#send-result").show().animateCss('bounceIn', function(){
-                        $('input').val("");
-                        $('textarea').val("");
-                        $("#send-result").delay(5000).slideUp();
-                    });
                 }
-            },
-            error: function() {
-                $("#send-result").removeClass('alert-success');
-                $("#send-result").addClass('alert-danger');
-                $("#send-result").text("Sorry... Your message could not have been delivered.");
-                $("#send-result").slideDown();
 
-            }
-            
-        });  // the end of ajax call to post formValues
-    }); // the end of form submit function
-    
-    //global.initContactFormListener = initContactFormListener();
+            });  // the end of ajax call to post formValues
+        }); // the end of form submit function
+    }
 
-};
+    return {
+        initContactFormListener: initContactFormListener
+    };
+
+})();

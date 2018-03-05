@@ -13,7 +13,7 @@ if (strlen($_REQUEST["contact-name"]) == 0) {
 }
 if (!empty($_REQUEST["contact-phone"])) {
     if (!preg_match("/^\s*(?:\+?([-. (]*(\d{1,3})[-. )]*))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4}))\s*$/",$_REQUEST["contact-phone"])) {
-        $result["errors"]["contact-phone"] = "Neplatné telefonní číslo!"; 
+        $result["errors"]["contact-phone"] = "Neplatné telefonní číslo!";
     }
 }
 if (strlen($_REQUEST["contact-email"]) == 0) {
@@ -37,16 +37,16 @@ if (count($result["errors"]) == 0) {
     if (file_exists("userFormHistory.json")) {
         $userFormHistory = json_decode(file_get_contents("userFormHistory.json"), true);
     }
-    
+
     $ip = $_SERVER["REMOTE_ADDR"];
     if (!array_key_exists($ip, $userFormHistory)) {
         $userFormHistory[$ip] = array();
     }
     $userFormHistory[$ip][] = time();
-    
+
     // ulozime
     file_put_contents("userFormHistory.json", json_encode($userFormHistory));
-    
+
     // zvalidujem
     $sendCount = 0;
     foreach ($userFormHistory[$ip] as $timestamp) {
@@ -54,7 +54,7 @@ if (count($result["errors"]) == 0) {
             $sendCount++;
         }
     }
-    
+
     if ($sendCount > 5) {
         $result["errors"]["contact-message"] = "Je možné poslat maximálne 5 zpráv v intervalu posledních 24 hodin.";
     }else {
@@ -65,27 +65,27 @@ if (count($result["errors"]) == 0) {
 
         //$mail->isSMTP();
         $mail->Host =''; // 'mail.primakurzy.cz';
-        $mail->SMTPAuth ='';// true; 
-        $mail->Username ='';// 'student@primakurzy.cz';                
-        $mail->Password =''; // 'student';                          
+        $mail->SMTPAuth ='';// true;
+        $mail->Username ='';// 'student@primakurzy.cz';
+        $mail->Password =''; // 'student';
         $mail->port=''; //25;
         $mail->setFrom($_REQUEST["contact-email"], $_REQUEST["contact-name"]);
-        $mail->addAddress('info@kamenictvi-erben.cz'); 
-        $mail->isHTML(true); 
-        $mail->Subject = 'MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ';
+        $mail->addAddress('info@steinmetz-erben.de');
+        $mail->isHTML(true);
+        $mail->Subject = 'NACHRICHT VON WWW.STEINMETZ-ERBEN.DE';
         $mail->Body    = sprintf("
-            <table> 
+            <table>
                 <tr>
                     <th style='vertical-align:top'>Name:</th> <td>%s</td>
                 </tr>
                 <tr>
-                    <th style='vertical-align:top'>Phone:</th> <td>%s</td>
+                    <th style='vertical-align:top'>Telefon:</th> <td>%s</td>
                 </tr>
                 <tr>
                     <th style='vertical-align:top'>Email:</th> <td>%s</td>
                 </tr>
                 <tr>
-                    <th style='vertical-align:top'>Message:</th> <td>%s</td>
+                    <th style='vertical-align:top'>Nachricht:</th> <td>%s</td>
                 </tr>
             </table>
             ",

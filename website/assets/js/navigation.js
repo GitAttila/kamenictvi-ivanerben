@@ -17,19 +17,58 @@ $(function(global){
 	var isMobileFlag = is_mobile();
 	global.mySite.isMobileFlag = isMobileFlag;
 
-	//console.log("isMobileFlag: "+isMobileFlag);
-
 	if (isMobileFlag===true) {
 		$("body").addClass("isMobile");
 	}
 
 	function navMenuInit() {
 			var cachedPage={};
+			var initLang="";
 			$cachedItems = $("#mainNavbar [data-menuitem]");
 			$($cachedItems).each(function(index,value){
 				cachedPage[$(value).data('menuitem')] = "";
 			});
 			global.mySite.cachedPage = cachedPage;
+
+			var pageCallbackFunc = {
+				main: function(){
+					initCarousels();
+					linkToGallery();
+					if (!isMobileFlag) {
+						initParallax("#parallax1","#parallax1 > div");
+					}
+				},
+				about: function(){
+					initCarousels();
+					if (!isMobileFlag) {
+						initParallax("#parallax2","#parallax2 > div");
+					}
+				},
+				realisations: function(){
+					initCommisionsGallery(function(){
+						LNG$(initLang).switchLang(initLang);
+					});
+				},
+				pricing: function(){
+					initPricingGallery(function(){
+						LNG$(initLang).switchLang(initLang);
+					});
+				},
+				contact: function(){
+					addScript( // kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
+						"https://maps.googleapis.com/maps/api/js?key=AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4&callback=MapModule.initContactMap",
+						"#ajax-container",
+						function(){
+							$(function(){
+								 $(window).load(function(){
+										MapModule.initContactMap();
+										MapModule.placeContactListeners();
+										ContactFormModule.initContactFormListener();
+								 });
+							});
+						});
+				}
+			}
 
 			placeButtonMoveUpListener();
 			placeLangSwitchListener(true);
@@ -71,8 +110,7 @@ $(function(global){
 	        e.preventDefault();
 	        var url = this.href.trim().toLowerCase();
 	        var menuName = $(this).data('menuitem').trim().toLowerCase();
-					var initLang = $(".lang-switcher>span").text().trim();
-
+					initLang = $(".lang-switcher>span").text().trim();
 	        $(this).siblings(".nav-link").removeClass("active");
 	        $(this).addClass("active");
 
@@ -97,57 +135,10 @@ $(function(global){
 									console.log("Loaded '" + menuName + "' from SERVER...");
 									updatePage(function(){
 										LNG$(initLang).switchLang(initLang);
+										cachedPage[menuName]=$(result).find("#ajax-container");
+										pageCallbackFunc[menuName]();
 									});
 
-			        		if (menuName==="realisations") {
-										cachedPage[menuName]=$(result).find("#ajax-container");
-			        			initCommisionsGallery(function(){
-												LNG$(initLang).switchLang(initLang);
-										});
-			        		} else if (menuName==="contact") {
-										cachedPage[menuName]=$(result).find("#ajax-container");
-										addScript( // kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
-											"https://maps.googleapis.com/maps/api/js?key=AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4&callback=initContactMap",
-											"body",
-											function(){
-												$(function(){
-												   $(window).load(function(){
-														 	initContactMap();
-															initContactFormListener();
-															placeContactListeners();
-												   });
-												});
-
-											});
-
-			        		} else if (menuName==="main") {
-										cachedPage[menuName]=$(result).find("#ajax-container");
-			        			initCarousels();
-			        			linkToGallery();
-			        			if (!isMobileFlag) {
-						        	controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-						        	parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
-						            	.setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
-						            	//.addIndicators()
-						            	.addTo(controller);
-						        }
-
-			        		} else if (menuName==="about") {
-										cachedPage[menuName]=$(result).find("#ajax-container");
-			        			initCarousels();
-			        			if (!isMobileFlag) {
-				        			controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-				        			parallax2 = new ScrollMagic.Scene({triggerElement: "#parallax2"})
-								    	.setTween("#parallax2 > div", {y: "50%", ease: Linear.easeNone})
-								    	//.addIndicators()
-								    	.addTo(controller);
-										}
-			        		} else if (menuName==="pricing") {
-										cachedPage[menuName]=$(result).find("#ajax-container");
-			        			initPricingGallery(function(){
-											LNG$(initLang).switchLang(initLang);
-										});
-			        		}
 		        		} else if (status === "error") {
 		        			$('.loader-wrapper').hide();
 		        			console.log("Error loading from server...");
@@ -159,76 +150,14 @@ $(function(global){
 							//if the page is already cached...
 							console.log("Loaded '" + menuName + "' from CACHE...");
 							$(mySite.cachedPage[menuName]).appendTo('#ajax-content');
-
 							updatePage(function(){
 								LNG$(initLang).switchLang(initLang);
+								pageCallbackFunc[menuName]();
 							});
-
 						}
 	        });  // end of animateCss function
-
 	    }); // end of click listener
 
-	}
-
-	function placeContactListeners() {
-		$(".btn-map").on("click", function(e){
-			e.preventDefault();
-			var $this=$(this);
-
-			window.addEventListener("orientationchange", function() {
-				if ($this.children().hasClass("fa-expand")) {
-					if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth<767) {
-						$("#contact-map").animate({
-							height: "75vh"
-						},500, function(){
-							google.maps.event.trigger(myMap, "resize");
-							myMap.setCenter(myPosition);
-							myMap.panBy(0,(-$("nav.navbar").height()));
-						});
-					} else {
-						$("#contact-map").animate({
-							height: "50vh"
-						},500, function(){
-							google.maps.event.trigger(myMap, "resize");
-							myMap.setCenter(myPosition);
-							myMap.panBy(0,(-$("nav.navbar").height()));
-						});
-					}
-				}
-			}, false);
-
-			if ($this.children().hasClass("fa-expand")) {
-				$this.children().removeClass("fa-expand").addClass("fa-compress");
-				$("#contact-map").animate({
-					height: "100vh"
-				},500, function(){
-					google.maps.event.trigger(myMap, "resize");
-					myMap.setCenter(myPosition);
-					myMap.panBy(0,(-$("nav.navbar").height()));
-				});
-				return;
-			} else if ($this.children().hasClass("fa-compress")) {
-				$this.children().removeClass("fa-compress").addClass("fa-expand");
-				if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth<767) {
-					$("#contact-map").animate({
-						height: "75vh"
-					},500, function(){
-						google.maps.event.trigger(myMap, "resize");
-						myMap.setCenter(myPosition);
-						myMap.panBy(0,(-$("nav.navbar").height()));
-					});
-				} else {
-					$("#contact-map").animate({
-						height: "50vh"
-					},500, function(){
-						google.maps.event.trigger(myMap, "resize");
-						myMap.setCenter(myPosition);
-						myMap.panBy(0,(-$("nav.navbar").height()));
-					});
-				}
-			}
-		})
 	}
 
 	function placeButtonMoveUpListener() {
@@ -363,12 +292,14 @@ $(function(global){
 		});
 	}
 
-	function initParallax() {
+	function initParallax(triggerElement,tweenElement) {
+		triggerElement = triggerElement || "";
+		tweenElement = tweenElement || "";
 		if (!isMobileFlag) {
 	        var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "100%"}});
-	        var parallax1 = new ScrollMagic.Scene({triggerElement: "#parallax1"})
-	            .setTween("#parallax1 > div", {y: "50%", ease: Linear.easeNone})
-	            //.addIndicators()
+	        var parallax1 = new ScrollMagic.Scene({triggerElement: triggerElement})
+	            .setTween(tweenElement, {y: "50%", ease: Linear.easeNone})
+	            //.addIndicators({name: triggerElement})
 	            .addTo(controller);
 	    }
 	}
@@ -376,16 +307,14 @@ $(function(global){
 	$(window).load(function(){
 		linkToGallery();
 		navMenuInit();
-		placeContactListeners();
 		placeButtonMoveUpListener();
 		placeLangSwitchListener();
-		initParallax();
+		initParallax("#parallax1","#parallax1 > div");
 	});
 
-
 	global.mySite.navMenuInit = navMenuInit;
-	global.mySite.placeContactListeners = placeContactListeners;
 	global.mySite.placeButtonMoveUpListener = placeButtonMoveUpListener;
 	global.mySite.placeLangSwitchListener = placeLangSwitchListener;
+	global.mySite.initParallax = initParallax;
 
 }(window));
