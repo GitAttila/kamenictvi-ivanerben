@@ -40,7 +40,7 @@ var MapModule = (function() {
           },
           // Apply the map style array to the map.
           styles: styleArray,
-          zoom: 10
+          zoom: 8
       });
 
       myMap = map;
