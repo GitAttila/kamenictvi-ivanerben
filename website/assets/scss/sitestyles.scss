@@ -572,6 +572,13 @@ button:focus {
 		text-decoration: none;
 		cursor: pointer;
 	}
+		&.filter-portfolio-divider{
+			&:hover {
+				background-color: transparent;
+				border-color: transparent;
+				border-right: 2px solid $ternary-background-color;
+			}
+		}
 	&.selected{
 		background-color: transparent;
 		color: $primary-text-color-hover;

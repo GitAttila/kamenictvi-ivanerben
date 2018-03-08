@@ -2,6 +2,10 @@
 
 $(function(global){
 	var controller, parallax1, parallax2;
+	var initLang="";
+	// kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
+	// steinmetz-erben.de google maps key ="AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4"
+	var APIkey = "AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4";
 	global.mySite ={};
 
 	function is_mobile() {
@@ -23,7 +27,6 @@ $(function(global){
 
 	function navMenuInit() {
 			var cachedPage={};
-			var initLang="";
 			$cachedItems = $("#mainNavbar [data-menuitem]");
 			$($cachedItems).each(function(index,value){
 				cachedPage[$(value).data('menuitem')] = "";
@@ -54,19 +57,21 @@ $(function(global){
 						LNG$(initLang).switchLang(initLang);
 					});
 				},
-				contact: function(){
-					addScript( // kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
-						"https://maps.googleapis.com/maps/api/js?key=AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4&callback=MapModule.initContactMap",
-						"#ajax-container",
-						function(){
-							$(function(){
-								 $(window).load(function(){
-										MapModule.initContactMap();
-										MapModule.placeContactListeners();
-										ContactFormModule.initContactFormListener();
-								 });
+				contact: function(runMapInitScript){
+					runMapInitScript = runMapInitScript || false;
+					if (runMapInitScript) {
+						addScript(
+							"https://maps.googleapis.com/maps/api/js?key=" + APIkey + "&callback=MapModule.initContactMap",
+							"body",
+							function(){
+								MapModule.placeContactListeners();
+								ContactFormModule.initContactFormListener();
 							});
-						});
+					} else {
+						MapModule.initContactMap();
+						MapModule.placeContactListeners();
+						ContactFormModule.initContactFormListener();
+					}
 				}
 			}
 
@@ -91,9 +96,7 @@ $(function(global){
 						callbackFunc = function(){};
 				}
 				$('#ajax-container').show();
-				$('#ajax-content').hide();
 				$('.loader-wrapper').hide();
-				$('#ajax-content').show();
 				$('#ajax-content').fadeIn(500,function(){
 					callbackFunc();
 				});
@@ -114,21 +117,24 @@ $(function(global){
 	        $(this).siblings(".nav-link").removeClass("active");
 	        $(this).addClass("active");
 
+					console.log(controller);
 					if (controller!==undefined && controller!==null) {
+
 						controller = controller.destroy(true);
 					}
 
 					//close the mobile menu if it is opened
 					$('#mainNavbar').collapse('hide');
 
-	        $('.loader-wrapper').show();
-	        $('#ajax-container').fadeOut(500, function(){
 
+	        $('#ajax-container').fadeOut(500, function(){
+						$('#ajax-content').hide();
+						$('.loader-wrapper').fadeIn(500);
 	        	$("body,html").stop().animate({scrollTop:0}, '50');
 						$(this).remove();
 
 						if (mySite.cachedPage[menuName]==='') {
-							// do the following if the page needs to be laoded for the first time(not cached yet)
+							// do the following if the page needs to be loaded for the first time(not cached yet)
 							// start of the ajax load function
 		        	$('#ajax-content').load(url + ' #ajax-container', function(result,status){
 								if (status === "success") {
@@ -136,7 +142,8 @@ $(function(global){
 									updatePage(function(){
 										LNG$(initLang).switchLang(initLang);
 										cachedPage[menuName]=$(result).find("#ajax-container");
-										pageCallbackFunc[menuName]();
+										menuName ==='contact' ? mapInitFlag = true : mapInitFlag = false;
+										pageCallbackFunc[menuName](mapInitFlag);
 									});
 
 		        		} else if (status === "error") {
@@ -266,28 +273,47 @@ $(function(global){
 			} else {
 				url = url + "realisations.html";
 			}
-
-	        $('#ajax-container').animateCss('fadeOutDown', function(){
+	        $('#ajax-container').fadeOut(500, function(){
 	        	$('#ajax-content').hide();
-	        	$('#ajax-content').load(url + ' #ajax-container', function(){
-	        		$(".navbar-nav>.nav-link").removeClass("active");
-	        		$(".navbar-nav>.nav-link[href='realisations.html']").addClass("active");
+						$('.loader-wrapper').show();
+						$(".navbar-nav>.nav-link").removeClass("active");
+						$(".navbar-nav>.nav-link[href='realisations.html']").addClass("active");
 
-	        		$('#ajax-content').show();
-	        		$('#ajax-content').animateCss('fadeInUp');
-	        		placeContactListeners();
-	        		placeButtonMoveUpListener();
-	        		placeLangSwitchListener();
-	        		initCommisionsGallery(function(){
-		        		$(".filter-item").each(function(i){
-		        			if ($(this).text().toLowerCase().trim() === galLink) {
-		        				$(this).trigger('click');
-		        				return;
-		        			}
+						if (mySite.cachedPage['realisations']==='') {
+		        	$('#ajax-content').load(url + ' #ajax-container', function(){
+								$('.loader-wrapper').hide();
+		        		$('#ajax-content').fadeIn(500);
+		        		placeButtonMoveUpListener();
+		        		placeLangSwitchListener();
+		        		initCommisionsGallery(function(){
+									LNG$(initLang).switchLang(initLang);
+			        		$(".filter-item").each(function(i){
+										if ($(this).data('lang') !== undefined) {
+			        				if ($(this).data('lang').toLowerCase().trim() === galLink) {
+			        					$(this).trigger('click');
+			        					return;
+			        				}
+										}
+			        		});
 		        		});
-
-	        		});
-	        	});
+		        	});
+						} else {
+							console.log("Loaded 'realisations' with quick link from CACHE...");
+							$(mySite.cachedPage['realisations']).appendTo('#ajax-content');
+							$('.loader-wrapper').hide();
+							$('#ajax-content').fadeIn(500);
+							placeButtonMoveUpListener();
+							placeLangSwitchListener();
+							initCommisionsGallery(function(){
+								LNG$(initLang).switchLang(initLang);
+								$(".filter-item").each(function(i){
+									if ($(this).data('lang').toLowerCase().trim() === galLink) {
+										$(this).trigger('click');
+										return;
+									}
+								});
+							});
+						}
 	        });
 		});
 	}
