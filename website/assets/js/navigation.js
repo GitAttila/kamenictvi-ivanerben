@@ -307,9 +307,11 @@ $(function(global){
 							initCommisionsGallery(function(){
 								LNG$(initLang).switchLang(initLang);
 								$(".filter-item").each(function(i){
-									if ($(this).data('lang').toLowerCase().trim() === galLink) {
-										$(this).trigger('click');
-										return;
+									if ($(this).data('lang') !== undefined) {
+										if ($(this).data('lang').toLowerCase().trim() === galLink) {
+											$(this).trigger('click');
+											return;
+										}
 									}
 								});
 							});
