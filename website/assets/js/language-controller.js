@@ -30,14 +30,18 @@
 			for (var i =0;i<=numOfLangEls-1;i++) {
 				var retrievedDataTag = $($("[data-lang]")[i]).data('lang');
 				value = LNG$(switchToLang).getKeyVal(retrievedDataTag);
-				if (value.trim()!=="") {
-					if (value.search("<ph>")>-1) {
-						value = value.substr(4,value.length);
-						$($("[data-lang]")[i]).attr("placeholder",value);
-					} else {
-						$($("[data-lang]")[i]).text(LNG$(switchToLang).getKeyVal(retrievedDataTag)).animateCss('pulse');
+				if (value===undefined) {
+					console.log("Language tag '" + retrievedDataTag  + "' is not defined in language database for: "+switchToLang);
+				} else {
+					if (value.trim()!=="") {
+						if (value.search("<ph>")>-1) {
+							value = value.substr(4,value.length);
+							$($("[data-lang]")[i]).attr("placeholder",value);
+						} else {
+							$($("[data-lang]")[i]).text(LNG$(switchToLang).getKeyVal(retrievedDataTag)).animateCss('pulse');
+						}
+						$($("[data-lang]")[i]).css("visibility","visible");
 					}
-					$($("[data-lang]")[i]).css("visibility","visible");
 				}
 			}
 		}

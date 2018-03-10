@@ -216,11 +216,9 @@ $(function(global){
 		var update = update || false;
 		var activeLanguages =[];
 		var languages = {
-			"cz":false,
-			"fr":false,
+			"cz":true,
 			"en":true,
-			"de":true,
-			"es":false
+			"de":false
 		};
 		$.each(languages, function(index,value){
 			if (value) {
