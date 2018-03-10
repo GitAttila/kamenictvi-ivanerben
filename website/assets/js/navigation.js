@@ -1,12 +1,79 @@
 // ---------- NAVIGATION ----------
 
 $(function(global){
-	var controller, parallax1, parallax2;
-	var initLang="";
+	var activeLang='';
 	// kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
 	// steinmetz-erben.de google maps key ="AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4"
 	var APIkey = "AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4";
-	global.mySite ={};
+
+	if (typeof global.mySite!== "object") {
+  	global.mySite ={};
+  }
+
+	var pageCallbackFunc = {
+		main: function(callbackF){
+			if (typeof callbackF!=='function') {
+				callbackF = function(){};
+			}
+			initCarousels(mySite.carouselsSetup);
+			placeJumpButtonListeners();
+			linkToGallery();
+			if (!isMobileFlag) {
+				initParallax("#parallax1","#parallax1 > div");
+			}
+			callbackF();
+		},
+		about: function(callbackF){
+			if (typeof callbackF!=='function') {
+				callbackF = function(){};
+			}
+			initCarousels(mySite.carouselsSetup);
+			placeJumpButtonListeners();
+			if (!isMobileFlag) {
+				initParallax("#parallax2","#parallax2 > div");
+			}
+			callbackF();
+		},
+		realisations: function(callbackF){
+			if (typeof callbackF!=='function') {
+				callbackF = function(){};
+			}
+			mySite.initCommisionsGallery(function(){
+				callbackF();
+				placeJumpButtonListeners();
+			});
+		},
+		pricing: function(callbackF){
+			if (typeof callbackF!=='function') {
+				callbackF = function(){};
+			}
+			mySite.initPricingGallery(function(){
+				callbackF();
+				placeJumpButtonListeners();
+			});
+		},
+		contact: function(callbackF,runMapInitScript){
+			if (typeof callbackF!=='function') {
+				callbackF = function(){};
+			}
+			runMapInitScript = runMapInitScript || false;
+			if (runMapInitScript) {
+				addScript(
+					"https://maps.googleapis.com/maps/api/js?key=" + APIkey + "&callback=MapModule.initContactMap",
+					"body",
+					function(){
+						MapModule.placeContactListeners();
+						ContactFormModule.initContactFormListener();
+						callbackF();
+					});
+			} else {
+				MapModule.initContactMap();
+				MapModule.placeContactListeners();
+				ContactFormModule.initContactFormListener();
+				callbackF();
+			}
+		}
+	}
 
 	function is_mobile() {
 	    var agents = ['android', 'webos', 'iphone', 'ipad', 'blackberry'];
@@ -26,6 +93,7 @@ $(function(global){
 	}
 
 	function navMenuInit() {
+			console.log("navMenu initialized");
 			var cachedPage={};
 			$cachedItems = $("#mainNavbar [data-menuitem]");
 			$($cachedItems).each(function(index,value){
@@ -33,74 +101,7 @@ $(function(global){
 			});
 			global.mySite.cachedPage = cachedPage;
 
-			var pageCallbackFunc = {
-				main: function(){
-					initCarousels();
-					linkToGallery();
-					if (!isMobileFlag) {
-						initParallax("#parallax1","#parallax1 > div");
-					}
-				},
-				about: function(){
-					initCarousels();
-					if (!isMobileFlag) {
-						initParallax("#parallax2","#parallax2 > div");
-					}
-				},
-				realisations: function(){
-					initCommisionsGallery(function(){
-						LNG$(initLang).switchLang(initLang);
-					});
-				},
-				pricing: function(){
-					initPricingGallery(function(){
-						LNG$(initLang).switchLang(initLang);
-					});
-				},
-				contact: function(runMapInitScript){
-					runMapInitScript = runMapInitScript || false;
-					if (runMapInitScript) {
-						addScript(
-							"https://maps.googleapis.com/maps/api/js?key=" + APIkey + "&callback=MapModule.initContactMap",
-							"body",
-							function(){
-								MapModule.placeContactListeners();
-								ContactFormModule.initContactFormListener();
-							});
-					} else {
-						MapModule.initContactMap();
-						MapModule.placeContactListeners();
-						ContactFormModule.initContactFormListener();
-					}
-				}
-			}
-
-			placeButtonMoveUpListener();
 			placeLangSwitchListener(true);
-
-			//helper function to load google maps script
-			function addScript( src, el,callbackF ) {
-				if (typeof callbackF!=="function") {
-					callbackF=function(){};
-				}
-				$(el).append($("<script />", {
-  				src: src,
-					async: true,
-					defer: true
-				}));
-				callbackF();
-			}
-			//helper function to update the page when clicking on menu
-			function updatePage(callbackFunc){
-				if (typeof callbackFunc!== 'function') {
-						callbackFunc = function(){};
-				}
-				$('#ajax-container').show();
-				$('.loader-wrapper').hide();
-				$('#ajax-content').fadeIn(500,function(){
-					callbackFunc();
-				});
-			}
 
 		  $('#mainNavbar').on('show.bs.collapse', function () {
 	  			$(".hamburger__menu-icon").addClass("hamburger__menu-icon--close-x");
@@ -113,61 +114,93 @@ $(function(global){
 	        e.preventDefault();
 	        var url = this.href.trim().toLowerCase();
 	        var menuName = $(this).data('menuitem').trim().toLowerCase();
-					initLang = $(".lang-switcher>span").text().trim();
-	        $(this).siblings(".nav-link").removeClass("active");
-	        $(this).addClass("active");
-
-					console.log(controller);
-					if (controller!==undefined && controller!==null) {
-
-						controller = controller.destroy(true);
-					}
-
-					//close the mobile menu if it is opened
-					$('#mainNavbar').collapse('hide');
-
-
-	        $('#ajax-container').fadeOut(500, function(){
-						$('#ajax-content').hide();
-						$('.loader-wrapper').fadeIn(500);
-	        	$("body,html").stop().animate({scrollTop:0}, '50');
-						$(this).remove();
-
-						if (mySite.cachedPage[menuName]==='') {
-							// do the following if the page needs to be loaded for the first time(not cached yet)
-							// start of the ajax load function
-		        	$('#ajax-content').load(url + ' #ajax-container', function(result,status){
-								if (status === "success") {
-									console.log("Loaded '" + menuName + "' from SERVER...");
-									updatePage(function(){
-										LNG$(initLang).switchLang(initLang);
-										cachedPage[menuName]=$(result).find("#ajax-container");
-										menuName ==='contact' ? mapInitFlag = true : mapInitFlag = false;
-										pageCallbackFunc[menuName](mapInitFlag);
-									});
-
-		        		} else if (status === "error") {
-		        			$('.loader-wrapper').hide();
-		        			console.log("Error loading from server...");
-		        		}
-
-		        	}); // end of ajax load function
-
-						} else {
-							//if the page is already cached...
-							console.log("Loaded '" + menuName + "' from CACHE...");
-							$(mySite.cachedPage[menuName]).appendTo('#ajax-content');
-							updatePage(function(){
-								LNG$(initLang).switchLang(initLang);
-								pageCallbackFunc[menuName]();
-							});
-						}
-	        });  // end of animateCss function
+					navItemClickCallback(menuName,this,url);
 	    }); // end of click listener
-
 	}
 
-	function placeButtonMoveUpListener() {
+	function navItemClickCallback (memuItemName,elem,url,callbackFunc) {
+		//console.log(memuItemName,elem,url,callbackFunc);
+		if (typeof menuItemName !== 'string') {menuItemName=''};
+		lang = LNG$().getSelectedLang();
+		elem = elem || '';
+		url = url || '';
+		if (typeof callbackFunc!=='function') {
+			callbackFunc = function(){};
+		}
+		$(elem).siblings(".nav-link").removeClass("active");
+		$(elem).addClass("active");
+
+		//close the mobile menu if it is opened
+		$('#mainNavbar').collapse('hide');
+
+		$('#ajax-container').fadeOut(500, function(){
+			$('#ajax-content').hide();
+			$('.loader-wrapper').fadeIn(500);
+			$("body,html").stop().animate({scrollTop:0}, '50');
+			$(this).remove();
+
+			if (mySite.cachedPage[memuItemName]==='') {
+				// do the following if the page needs to be loaded for the first time(not cached yet)
+				// start of the ajax load function
+				$('#ajax-content').load(url + ' #ajax-container', function(result,status){
+					if (status === "success") {
+						console.log("Loaded '" + memuItemName + "' from SERVER...");
+						updatePage(function(){
+							LNG$(lang).switchLang(lang);
+							mySite.cachedPage[memuItemName]=$(result).find("#ajax-container");
+							memuItemName ==='contact' ? mapInitFlag = true : mapInitFlag = false;
+							pageCallbackFunc[memuItemName](callbackFunc,mapInitFlag);
+						});
+
+					} else if (status === "error") {
+						$('.loader-wrapper').hide();
+						console.log("Error loading from server...");
+					}
+
+				}); // end of ajax load function
+
+			} else {
+				//if the page is already cached...
+				console.log("Loaded '" + memuItemName + "' from CACHE...");
+				$(mySite.cachedPage[memuItemName]).appendTo('#ajax-content');
+				updatePage(function(){
+					LNG$(lang).switchLang(lang);
+					pageCallbackFunc[memuItemName](callbackFunc);
+				});
+			}
+		});  // end of fadeOut function
+	} // end of navItemClickCallback function
+
+	//helper function to update the page when clicking on menu
+	function updatePage(callbackFunc){
+		if (typeof callbackFunc!== 'function') {
+				callbackFunc = function(){};
+		}
+		$('#ajax-container').show();
+		$('.loader-wrapper').hide();
+		$('#ajax-content').fadeIn(500,function(){
+			callbackFunc();
+		});
+	}
+
+	//helper function to load google maps script
+	function addScript( src, el,callbackF ) {
+		if (typeof callbackF!=="function") {
+			callbackF=function(){};
+		}
+		$(el).append($("<script />", {
+			src: src,
+			async: true,
+			defer: true
+		}));
+		callbackF();
+	}
+
+	function placeJumpButtonListeners() {
+		clearInterval(mySite.btnInterval);
+		mySite.btnInterval = setInterval(function(){
+          $(".btn-down").animateCss("bounce");
+    },3000);
 
 		var offSetY=0;
 		$(window).on("scroll", function(){
@@ -220,12 +253,13 @@ $(function(global){
 			"en":true,
 			"de":false
 		};
+		activeLang = $(".lang-switcher>span").text().trim();
+
 		$.each(languages, function(index,value){
 			if (value) {
 				activeLanguages.push(index);
 			}
 		})
-		var activeLang = $(".lang-switcher>span").text().trim();
 		if (update) {
 			LNG$(activeLang).switchLang(activeLang);
 		}
@@ -261,64 +295,36 @@ $(function(global){
 	}
 
 	function linkToGallery(){
-
+		console.log('links to gallery initialized...');
 		$(".btn-site").on('click',function(e){
 			e.preventDefault;
-			var galLink = $(this).data('link').trim();
+			var activeLang = LNG$().getSelectedLang();
+			var galLink = $(this).data('link').toLowerCase().trim();
+			var $elem = $("[data-menuitem='realisations']");
 			var url = window.location.href;
 			if (url.search("index.html") >= 0 ) {
 				url = url.replace("index.html","realisations.html");
 			} else {
 				url = url + "realisations.html";
 			}
-	        $('#ajax-container').fadeOut(500, function(){
-	        	$('#ajax-content').hide();
-						$('.loader-wrapper').show();
-						$(".navbar-nav>.nav-link").removeClass("active");
-						$(".navbar-nav>.nav-link[href='realisations.html']").addClass("active");
 
-						if (mySite.cachedPage['realisations']==='') {
-		        	$('#ajax-content').load(url + ' #ajax-container', function(){
-								$('.loader-wrapper').hide();
-		        		$('#ajax-content').fadeIn(500);
-		        		placeButtonMoveUpListener();
-		        		placeLangSwitchListener();
-		        		initCommisionsGallery(function(){
-									LNG$(initLang).switchLang(initLang);
-			        		$(".filter-item").each(function(i){
-										if ($(this).data('lang') !== undefined) {
-			        				if ($(this).data('lang').toLowerCase().trim() === galLink) {
-			        					$(this).trigger('click');
-			        					return;
-			        				}
-										}
-			        		});
-		        		});
-		        	});
-						} else {
-							console.log("Loaded 'realisations' with quick link from CACHE...");
-							$(mySite.cachedPage['realisations']).appendTo('#ajax-content');
-							$('.loader-wrapper').hide();
-							$('#ajax-content').fadeIn(500);
-							placeButtonMoveUpListener();
-							placeLangSwitchListener();
-							initCommisionsGallery(function(){
-								LNG$(initLang).switchLang(initLang);
-								$(".filter-item").each(function(i){
-									if ($(this).data('lang') !== undefined) {
-										if ($(this).data('lang').toLowerCase().trim() === galLink) {
-											$(this).trigger('click');
-											return;
-										}
-									}
-								});
-							});
+			navItemClickCallback('realisations',$elem,url,function(){
+					$(".filter-item").each(function(i){
+						if ($(this).data('lang') !== undefined) {
+							if ($(this).data('lang').toLowerCase().trim() === galLink) {
+								$(this).trigger('click');
+								return;
+							}
 						}
-	        });
+					});
+			});
+
 		});
+
 	}
 
 	function initParallax(triggerElement,tweenElement) {
+		console.log("parallax '"+ triggerElement +"' initialized");
 		triggerElement = triggerElement || "";
 		tweenElement = tweenElement || "";
 		if (!isMobileFlag) {
@@ -333,13 +339,15 @@ $(function(global){
 	$(window).load(function(){
 		linkToGallery();
 		navMenuInit();
-		placeButtonMoveUpListener();
+		placeJumpButtonListeners();
 		placeLangSwitchListener();
 		initParallax("#parallax1","#parallax1 > div");
 	});
 
 	global.mySite.navMenuInit = navMenuInit;
-	global.mySite.placeButtonMoveUpListener = placeButtonMoveUpListener;
+	global.mySite.linkToGallery = linkToGallery;
+	global.mySite.navItemClickCallback = navItemClickCallback;
+	global.mySite.placeJumpButtonListeners = placeJumpButtonListeners;
 	global.mySite.placeLangSwitchListener = placeLangSwitchListener;
 	global.mySite.initParallax = initParallax;
 

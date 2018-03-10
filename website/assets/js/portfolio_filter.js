@@ -1,6 +1,9 @@
 // ---------- PORTFOLIO FILTER ----------
+$(function(global){
 
 	function initCommisionsGallery(callbackFunc){
+		var activeLang = LNG$().getSelectedLang();
+		console.log("initCommisionsGallery called");
 		typeof callbackFunc==="function" ? callbackFunc = callbackFunc : callbackFunc = function(){};
 
 		var brokenCount = 0;
@@ -27,12 +30,13 @@
 		    $(".img-loader").delay(3000).slideUp(1000);
 		    $(".grid>.grid-item").removeClass("hover-off");
 
-		    callbackFunc();
+		    //callbackFunc();
 
 		  })
 		  .done( function() {
 		    console.log("all images of 'Commisions menu' successfully loaded");
-
+				LNG$(activeLang).switchLang(activeLang);
+				callbackFunc();
 		  })
 		  .fail( function() {
 		    console.log( brokenCount + " of 'Commisions menu' images have broken links. Check your image paths.");
@@ -93,6 +97,13 @@
 
 	function instantiateIsotopeGallery(el,options){
 		$(el).isotope(options);
+		$(el).isotope( 'on', 'layoutComplete', function(){
+			if (el==='.grid') {
+				$(el+" :visible img").animateCss('pulse');
+			} else if (el==='.grid-pricing') {
+				$(el+" :visible").animateCss('pulse');
+			}
+		});
 	}
 
 	function buildImgCategories(listElement,imgContainers) {
@@ -142,7 +153,6 @@
 				}
 			}).appendTo($buttons.children().last()).attr('data-lang',tagName);
 		})
-
 	};
 
 	function placeFilterListeners(gridEl) {   // ".grid"
@@ -170,6 +180,7 @@
 				  	  	}
 					});
 				}
+
 	    });
 
 		$(gridEl + ' .grid-item').on( 'click', function(e) {
@@ -186,3 +197,8 @@
 		});
 
 	}
+
+	global.mySite.initCommisionsGallery = initCommisionsGallery;
+	global.mySite.initPricingGallery = initPricingGallery;
+
+}(window));

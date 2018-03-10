@@ -44,8 +44,10 @@
 					}
 				}
 			}
+		},
+		getSelectedLang: function(){
+			return $(".lang-switcher>span").text().toLowerCase().trim();
 		}
-
 	};
 
 	Lang.init = function(activeLang){

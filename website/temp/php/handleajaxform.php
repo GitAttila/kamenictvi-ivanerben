@@ -55,8 +55,8 @@ if (count($result["errors"]) == 0) {
         }
     }
 
-    if ($sendCount > 5) {
-        $result["errors"]["contact-message"] = "Je možné poslat maximálne 5 zpráv v intervalu posledních 24 hodin.";
+    if ($sendCount > 3) {
+        $result["errors"]["contact-message"] = "Je možné poslat maximálne 3 zpráv v intervalu posledních 24 hodin.";
     }else {
         // form ok
         require 'PHPMailer/PHPMailerAutoload.php';
@@ -70,7 +70,7 @@ if (count($result["errors"]) == 0) {
         $mail->Password =''; // 'student';
         $mail->port=''; //25;
         $mail->setFrom($_REQUEST["contact-email"], $_REQUEST["contact-name"]);
-        $mail->addAddress('info@steinmetz-erben.de');
+        $mail->addAddress('info@kamenictvi-erben.cz');
         $mail->isHTML(true);
         $mail->Subject = 'NACHRICHT VON WWW.STEINMETZ-ERBEN.DE';
         $mail->Body    = sprintf("
