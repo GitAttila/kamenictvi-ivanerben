@@ -15,7 +15,7 @@ $(function(global){
 			if (typeof callbackF!=='function') {
 				callbackF = function(){};
 			}
-			initCarousels(mySite.carouselsSetup);
+			mySite.initCarousels(mySite.carouselsSetup);
 			placeJumpButtonListeners();
 			linkToGallery();
 			if (!isMobileFlag) {
@@ -27,7 +27,7 @@ $(function(global){
 			if (typeof callbackF!=='function') {
 				callbackF = function(){};
 			}
-			initCarousels(mySite.carouselsSetup);
+			mySite.initCarousels(mySite.carouselsSetup);
 			placeJumpButtonListeners();
 			if (!isMobileFlag) {
 				initParallax("#parallax2","#parallax2 > div");
