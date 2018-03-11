@@ -253,9 +253,9 @@ $(function(global){
 		var update = update || false;
 		var activeLanguages =[];
 		var languages = {
-			"cz":true,
+			"cz":false,
 			"en":true,
-			"de":false
+			"de":true
 		};
 		activeLang = LNG$().getSelectedLang();
 

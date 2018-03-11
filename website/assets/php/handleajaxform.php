@@ -20,7 +20,7 @@ if (strlen($_REQUEST["contact-email"]) == 0) {
     $result["errors"]["contact-email"] = "Must be filled out!";
 }else {
     if (!preg_match("/^.*@.*\\..*$/", $_REQUEST["contact-email"])) {
-        $result["errors"]["contact-email"] = "Neplatný email";
+        $result["errors"]["contact-email"] = "Invalid email!";
     }
 }
 if (strlen($_REQUEST["contact-message"]) == 0) {
@@ -70,9 +70,9 @@ if (count($result["errors"]) == 0) {
         $mail->Password =''; // 'student';
         $mail->port=''; //25;
         $mail->setFrom($_REQUEST["contact-email"], $_REQUEST["contact-name"]);
-        $mail->addAddress('info@kamenictvi-erben.cz'); //info@kamenictvi-erben.cz'
+        $mail->addAddress('info@steinmetz-erben.de'); //info@kamenictvi-erben.cz'
         $mail->isHTML(true);
-        $mail->Subject = 'MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ'; //MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ
+        $mail->Subject = 'NACHRICHT VON WWW.STEINMETZ-ERBEN.DE'; //MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ
         $mail->Body    = sprintf("
             <table>
                 <tr>
@@ -97,7 +97,7 @@ if (count($result["errors"]) == 0) {
 
         $ok = $mail->send();
         if(!$ok) {
-            $result["errors"]["contact-message"] = "Email could not be sent.";
+            $result["errors"]["contact-message"] = "Email could not be sent!";
         }
     }
 }
