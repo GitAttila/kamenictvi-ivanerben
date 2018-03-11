@@ -9,26 +9,26 @@ $result = array(
 // provedu validaci
 // posbiram chyby
 if (strlen($_REQUEST["contact-name"]) == 0) {
-    $result["errors"]["contact-name"] = "Povinné pole!";
+    $result["errors"]["contact-name"] = "Must be filled out!";
 }
 if (!empty($_REQUEST["contact-phone"])) {
     if (!preg_match("/^\s*(?:\+?([-. (]*(\d{1,3})[-. )]*))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4}))\s*$/",$_REQUEST["contact-phone"])) {
-        $result["errors"]["contact-phone"] = "Neplatné telefonní číslo!";
+        $result["errors"]["contact-phone"] = "Invalid phone number!";
     }
 }
 if (strlen($_REQUEST["contact-email"]) == 0) {
-    $result["errors"]["contact-email"] = "Povinné pole!";
+    $result["errors"]["contact-email"] = "Must be filled out!";
 }else {
     if (!preg_match("/^.*@.*\\..*$/", $_REQUEST["contact-email"])) {
         $result["errors"]["contact-email"] = "Neplatný email";
     }
 }
 if (strlen($_REQUEST["contact-message"]) == 0) {
-    $result["errors"]["contact-message"] = "Povinné pole!";
+    $result["errors"]["contact-message"] = "Must be filled out!";
 }
 
 if (strlen($_REQUEST["contact-message"]) > 1000) {
-    $result["errors"]["contact-message"] = "Vaše zpráva překročila maximálni počet(1000) povolených znaků!";
+    $result["errors"]["contact-message"] = "Your message has exceeded maximum allowed number of 1000 characters!";
 }
 
 
@@ -56,7 +56,7 @@ if (count($result["errors"]) == 0) {
     }
 
     if ($sendCount > 3) {
-        $result["errors"]["contact-message"] = "Je možné poslat maximálne 3 zpráv v intervalu posledních 24 hodin.";
+        $result["errors"]["contact-message"] = "It is not allowed to send more than 3 messages from within 24 hours.";
     }else {
         // form ok
         require 'PHPMailer/PHPMailerAutoload.php';
@@ -70,22 +70,22 @@ if (count($result["errors"]) == 0) {
         $mail->Password =''; // 'student';
         $mail->port=''; //25;
         $mail->setFrom($_REQUEST["contact-email"], $_REQUEST["contact-name"]);
-        $mail->addAddress('info@kamenictvi-erben.cz');
+        $mail->addAddress('info@kamenictvi-erben.cz); //info@kamenictvi-erben.cz'
         $mail->isHTML(true);
-        $mail->Subject = 'NACHRICHT VON WWW.STEINMETZ-ERBEN.DE';
+        $mail->Subject = 'MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ'; //MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ
         $mail->Body    = sprintf("
             <table>
                 <tr>
                     <th style='vertical-align:top'>Name:</th> <td>%s</td>
                 </tr>
                 <tr>
-                    <th style='vertical-align:top'>Telefon:</th> <td>%s</td>
+                    <th style='vertical-align:top'>Phone:</th> <td>%s</td>
                 </tr>
                 <tr>
                     <th style='vertical-align:top'>Email:</th> <td>%s</td>
                 </tr>
                 <tr>
-                    <th style='vertical-align:top'>Nachricht:</th> <td>%s</td>
+                    <th style='vertical-align:top'>Message:</th> <td>%s</td>
                 </tr>
             </table>
             ",

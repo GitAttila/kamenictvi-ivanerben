@@ -39,8 +39,10 @@ $(function(global){
 				callbackF = function(){};
 			}
 			mySite.initCommisionsGallery(function(){
-				callbackF();
+				var lang = LNG$().getSelectedLang();
+				LNG$(lang).switchLang(lang);
 				placeJumpButtonListeners();
+				callbackF();
 			});
 		},
 		pricing: function(callbackF){
@@ -48,8 +50,10 @@ $(function(global){
 				callbackF = function(){};
 			}
 			mySite.initPricingGallery(function(){
-				callbackF();
+				var lang = LNG$().getSelectedLang();
+				LNG$(lang).switchLang(lang);
 				placeJumpButtonListeners();
+				callbackF();
 			});
 		},
 		contact: function(callbackF,runMapInitScript){
@@ -58,12 +62,12 @@ $(function(global){
 			}
 			runMapInitScript = runMapInitScript || false;
 			if (runMapInitScript) {
+				ContactFormModule.initContactFormListener();
 				addScript(
 					"https://maps.googleapis.com/maps/api/js?key=" + APIkey + "&callback=MapModule.initContactMap",
 					"body",
 					function(){
 						MapModule.placeContactListeners();
-						ContactFormModule.initContactFormListener();
 						callbackF();
 					});
 			} else {
@@ -101,7 +105,7 @@ $(function(global){
 			});
 			global.mySite.cachedPage = cachedPage;
 
-			placeLangSwitchListener(true);
+			//placeLangSwitchListener(true);
 
 		  $('#mainNavbar').on('show.bs.collapse', function () {
 	  			$(".hamburger__menu-icon").addClass("hamburger__menu-icon--close-x");
@@ -253,16 +257,16 @@ $(function(global){
 			"en":true,
 			"de":false
 		};
-		activeLang = $(".lang-switcher>span").text().trim();
+		activeLang = LNG$().getSelectedLang();
 
 		$.each(languages, function(index,value){
 			if (value) {
 				activeLanguages.push(index);
 			}
 		})
-		if (update) {
-			LNG$(activeLang).switchLang(activeLang);
-		}
+		// if (update) {
+		// 	LNG$(activeLang).switchLang(activeLang);
+		// }
 
 		$(".lang-switcher>span").on("click", function(){
 			var next = activeLanguages.indexOf(activeLang)+1;
@@ -284,7 +288,7 @@ $(function(global){
 				langToCheck = langToCheck || "";
 			}
 			var isDefined = false;
-			var ind = activeLangs.indexOf(activeLang);
+			var ind = activeLangs.indexOf(langToCheck);
 			if (ind === -1) {
 				console.log("error: language: '"+ langToCheck +"' within 'index.html' file is not compatible with languages defined.");
 			} else {

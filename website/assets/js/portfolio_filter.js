@@ -30,13 +30,12 @@ $(function(global){
 		    $(".img-loader").delay(3000).slideUp(1000);
 		    $(".grid>.grid-item").removeClass("hover-off");
 
-		    //callbackFunc();
+		    callbackFunc();
 
 		  })
 		  .done( function() {
 		    console.log("all images of 'Commisions menu' successfully loaded");
 				LNG$(activeLang).switchLang(activeLang);
-				callbackFunc();
 		  })
 		  .fail( function() {
 		    console.log( brokenCount + " of 'Commisions menu' images have broken links. Check your image paths.");
