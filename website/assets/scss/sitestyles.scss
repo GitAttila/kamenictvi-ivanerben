@@ -3,6 +3,7 @@
 @import "../vendors/scss/font_awesome/font-awesome";
 @import "variables";
 @import "hamburger";
+@import "spinner";
 @import "loader";
 @import "scrollbars";
 
@@ -356,6 +357,20 @@ button:focus {
 		border: 2px solid $highlight-color;
 		text-decoration: none;
 		cursor: pointer;
+	}
+	&[disabled] {
+		border-color: $secondary-text-color;
+		background-color: #e6e7e8;
+		color: $secondary-text-color;
+		cursor: not-allowed;
+	}
+	&.spinning {
+		.spinner {
+			display: inline-block;
+		}
+		.btn-site-text {
+			display: none;
+		}
 	}
 }
 .btn-site-100 {

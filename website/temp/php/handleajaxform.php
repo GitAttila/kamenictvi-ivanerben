@@ -70,7 +70,7 @@ if (count($result["errors"]) == 0) {
         $mail->Password =''; // 'student';
         $mail->port=''; //25;
         $mail->setFrom($_REQUEST["contact-email"], $_REQUEST["contact-name"]);
-        $mail->addAddress('info@kamenictvi-erben.cz); //info@kamenictvi-erben.cz'
+        $mail->addAddress('info@kamenictvi-erben.cz'); //info@kamenictvi-erben.cz'
         $mail->isHTML(true);
         $mail->Subject = 'MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ'; //MESSAGE FROM WWW.KAMENICTVI-ERBEN.CZ
         $mail->Body    = sprintf("
