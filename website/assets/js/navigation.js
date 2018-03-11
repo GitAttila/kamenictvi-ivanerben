@@ -2,6 +2,7 @@
 
 $(function(global){
 	var activeLang='';
+	var pageSwitchingActive=false;
 	// kamenictvi-erben.cz google maps key ="AIzaSyDsSU84WoixvvCZ6EV48Bt1777N2NLKHms"
 	// steinmetz-erben.de google maps key ="AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4"
 	var APIkey = "AIzaSyA0qVKpndfcoIgP5nwuJxmH5q0v5TSvEc4";
@@ -22,6 +23,7 @@ $(function(global){
 				initParallax("#parallax1","#parallax1 > div");
 			}
 			callbackF();
+			pageSwitchingActive = false;
 		},
 		about: function(callbackF){
 			if (typeof callbackF!=='function') {
@@ -33,6 +35,7 @@ $(function(global){
 				initParallax("#parallax2","#parallax2 > div");
 			}
 			callbackF();
+			pageSwitchingActive = false;
 		},
 		realisations: function(callbackF){
 			if (typeof callbackF!=='function') {
@@ -43,6 +46,7 @@ $(function(global){
 				LNG$(lang).switchLang(lang);
 				placeJumpButtonListeners();
 				callbackF();
+				pageSwitchingActive = false;
 			});
 		},
 		pricing: function(callbackF){
@@ -54,6 +58,7 @@ $(function(global){
 				LNG$(lang).switchLang(lang);
 				placeJumpButtonListeners();
 				callbackF();
+				pageSwitchingActive = false;
 			});
 		},
 		contact: function(callbackF,runMapInitScript){
@@ -69,12 +74,14 @@ $(function(global){
 					function(){
 						MapModule.placeContactListeners();
 						callbackF();
+						pageSwitchingActive = false;
 					});
 			} else {
 				MapModule.initContactMap();
 				MapModule.placeContactListeners();
 				ContactFormModule.initContactFormListener();
 				callbackF();
+				pageSwitchingActive = false;
 			}
 		}
 	}
@@ -116,14 +123,17 @@ $(function(global){
 
 	    $('.nav-link').on( 'click', function(e) {
 	        e.preventDefault();
-	        var url = this.href.trim().toLowerCase();
-	        var menuName = $(this).data('menuitem').trim().toLowerCase();
-					navItemClickCallback(menuName,this,url);
+					if (!pageSwitchingActive) {
+	        	var url = this.href.trim().toLowerCase();
+	        	var menuName = $(this).data('menuitem').trim().toLowerCase();
+						navItemClickCallback(menuName,this,url);
+					}
 	    }); // end of click listener
 	}
 
 	function navItemClickCallback (memuItemName,elem,url,callbackFunc) {
 		//console.log(memuItemName,elem,url,callbackFunc);
+		pageSwitchingActive = true;
 		if (typeof menuItemName !== 'string') {menuItemName=''};
 		lang = LNG$().getSelectedLang();
 		elem = elem || '';
@@ -249,8 +259,7 @@ $(function(global){
 
 	}
 
-	function placeLangSwitchListener(update) {
-		var update = update || false;
+	function placeLangSwitchListener() {
 		var activeLanguages =[];
 		var languages = {
 			"cz":false,
@@ -264,9 +273,6 @@ $(function(global){
 				activeLanguages.push(index);
 			}
 		})
-		// if (update) {
-		// 	LNG$(activeLang).switchLang(activeLang);
-		// }
 
 		$(".lang-switcher>span").on("click", function(){
 			var next = activeLanguages.indexOf(activeLang)+1;
