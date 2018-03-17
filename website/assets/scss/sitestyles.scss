@@ -103,22 +103,9 @@ button:focus {
 }
 /* ********** NAVBAR ********** */
 .navbar {
-	z-index: 100;
-}
-.container-navbar {
-	position: absolute;
-	right: 3rem;
-	left: 20rem;
-	top: 50%;
-	transform:translateY(-50%);
-	width: auto;
-	z-index: 2;
-}
-.container-branding {
-	z-index: 1;
+	z-index: 1000;
 }
 .navbar-collapse {
-	justify-content:flex-end;
 	font-size: 1.5rem;
 }
 
@@ -126,45 +113,41 @@ button:focus {
 	background-color: rgba(255,255,255,0.9);
 	color: $secondary-text-color;
 	padding: 0;
-	z-index: 1000;
+	.container{
+		position: relative;
+	}
 	.navbar-nav {
-		text-align: center;
 		margin: 0.5rem;
+		margin-right: 4rem;
 		.nav-item {
+			padding: 0rem 0.5rem;
+			border: 2px solid transparent;
+		 	transition: background-color .25s ease-in-out, border .25s ease-in-out;
+			.nav-link {
+				color: $secondary-text-color;
+				transition: color .25s ease-in-out;
+			}
 			&.active {
 				border: 2px solid $primary-text-color;
-				color: $primary-text-color;
+				.nav-link {
+					color: $primary-text-color;
+				}
 			}
 			&:hover {
-				color: $primary-background-color;
 				background-color: $highlight-color;
 				border: 2px solid $highlight-color;
 				cursor: pointer;
+				.nav-link {
+					color: $primary-background-color;
+				}
 			}
-			padding: 0rem 0.7rem;
-			border: 2px solid transparent;
-			color: $secondary-text-color;
-		 	-webkit-transition: color .25s ease-in-out, background-color .25s ease-in-out, border .25s ease-in-out;
-		 	transition:  color .25s ease-in-out, background-color .25s ease-in-out, border .25s ease-in-out;
-		}
-	}
-	.navbar-brand {
-		h1,h2 {
-  			-webkit-transition: color .25s ease-in-out;
-  			transition:  color .25s ease-in-out;
-  		}
-	}
-	.navbar-brand:hover {
-		h1,h2 {
-			color: $primary-text-color-hover;
-			cursor: pointer;
 		}
 	}
 }
 
 .navbar-toggler {
-	position: absolute;
-	right: 3rem;
+	position: relative;
+	right: 5rem;
 	top: 50%;
 	transform:translateY(-50%);
 	color: $primary-text-color;
@@ -173,29 +156,41 @@ button:focus {
 	}
 }
 
-.navbar-brand h2{
-	color: $primary-text-color;
-	font-size: 2.5rem;
-	strong {
-		font-weight: 400;
+.navbar-brand {
+	h1,h2 {
+		transition:  color .25s ease-in-out;
+		&:hover {
+			color: $primary-text-color-hover;
+			cursor: pointer;
+		}
+	}
+	h1{
+		font-weight: 700;
+		color: $secondary-text-color;
+		font-size: 1.1rem;
+		margin-top: -0.5rem;
+	}
+	h2 {
+		color: $primary-text-color;
+		font-size: 2.5rem;
+		strong {
+			font-weight: 400;
+		}
 	}
 }
-.navbar-brand h1{
-	font-weight: 700;
-	color: $secondary-text-color;
-	font-size: 1.1rem;
-	margin-top: -0.5rem;
-}
-
-.lang-switcher {
+.lang-switcher-wrapper {
 	position: absolute;
 	right: 0;
+	margin-right: 1rem;
+}
+.lang-switcher {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border: 2px solid $secondary-text-color;
 	border-radius: 50%;
 	width: 2rem;
 	height: 2rem;
-	top: 50%;
-    transform: translateY(-50%);
 	transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 	span {
 		display: block;
@@ -219,11 +214,6 @@ button:focus {
 /* ********** CAROUSEL ********** */
 .carousel {
 	background-color: $secondary-background-color;
-	.container{
-		margin-left: 1rem;
-		margin-right: 1rem;
-		width: 100%;
-	}
 }
 .carousel-indicators {
     bottom: 5rem;
@@ -233,6 +223,7 @@ button:focus {
     opacity: 0.5;
     &:hover {
     	opacity: 0.9;
+			cursor: pointer;
     }
 }
 .carousel-indicators li {
@@ -259,9 +250,6 @@ button:focus {
 		text-align: left;
 	}
 }
-.carousel-item {
-	height: 100vh;
-}
 
 #main-carousel {
 	.bg-overlay{
@@ -279,13 +267,6 @@ button:focus {
 	}
 	.row-slide {
 		height: 100vh;
-	}
-	.carousel-image {
-		height: 80vh;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%,-50%);
 	}
 
 	.carousel-image img {
@@ -314,22 +295,20 @@ button:focus {
 }
 
 .carousel-feature {
-		background-color: transparent;
-		margin: 1rem 0;
-	.carousel-inner {
-		height: 500px;
-		width: 500px;
-		margin: 0 auto;
-		border-radius: 100%;
-		background-color: $secondary-background-color;
-	}
-	.carousel-item {
-		justify-content:center;
-		align-items:center;
-		width: 100%;
-		height: 100%;
-		img {
-			width: 80%;
+		width: 40rem;
+		height: 40rem;
+		border-radius: 50%;
+		overflow: hidden;
+		margin: auto;
+		.carousel-inner {
+			height: 100%;
+			.carousel-item {
+				height:100%;
+				img {
+					height: 100%;
+					display: block;
+					margin: 0 auto;
+				}
 		}
 	}
 }
@@ -770,6 +749,24 @@ input[type=text].site-form-control:focus, textarea.site-form-control:focus {
 
 
 /* ********** ABOUT ********** */
+#about-carousel {
+	height: 100vh;
+	.carousel-item{
+		height: 100vh;
+		&>img{
+			position: absolute;
+			left: -9999px;
+		    right: -9999px;
+		    margin: 0 auto;
+		    max-width: none;
+		    min-width: 100%;
+		    min-height: 100vh;
+		    max-height: 100vw;
+		    top: 50%;
+		    transform: translateY(-50%);
+		}
+	}
+}
 .about-carousel-caption {
 	position: absolute;
 	text-align: center;
@@ -783,18 +780,6 @@ input[type=text].site-form-control:focus, textarea.site-form-control:focus {
 	background-color: rgba(0,0,0,0.4);
 	text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
 	-webkit-backdrop-filter: blur(5px);
-}
-#about-carousel .carousel-item>img {
-	position: absolute;
-	left: -9999px;
-    right: -9999px;
-    margin: 0 auto;
-    max-width: none;
-    min-width: 100%;
-    min-height: 100vh;
-    max-height: 100vw;
-    top: 50%;
-    transform: translateY(-50%);
 }
 .card-block {
 	text-align: center;

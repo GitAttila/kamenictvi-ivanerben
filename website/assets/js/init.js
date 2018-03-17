@@ -7,32 +7,32 @@ $(function(global){
     var carouselsSetup = [
             {
                 carousel: "#main-carousel",
-                interval:7000,
+                interval:700000,
                 pause: "none"
             },
             {
                 carousel: "#about-carousel",
-                interval:5000,
+                interval:500000,
                 pause: "none"
             },
             {
                 carousel: "#carouselTombstones",
-                interval:3000,
+                interval:300000,
                 pause: "none"
             },
             {
                 carousel: "#carouselGarden",
-                interval:3000,
+                interval:300000,
                 pause: "none"
             },
             {
                 carousel: "#carouselRestorations",
-                interval:3000,
+                interval:300000,
                 pause: "none"
             },
             {
                 carousel: "#CarouselMonuments",
-                interval:3000,
+                interval:300000,
                 pause: "none"
             }
     ];
@@ -62,6 +62,8 @@ $(function(global){
         }
         console.log("carousels initialized");
     };
+
+    initCarousels(carouselsSetup);
 
     global.mySite.carouselsSetup = carouselsSetup;
     global.mySite.initCarousels = initCarousels;

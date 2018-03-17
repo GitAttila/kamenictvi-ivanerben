@@ -64,40 +64,51 @@
    </head>
    <body>
 
-      <nav class="navbar navbar-toggleable-md fixed-top navbar-custom-light shadowed-down">
+      <nav class="navbar navbar-expand-lg fixed-top navbar-custom-light shadowed-down">
          <div class="container">
 
-            <div class="container container-branding">
                <a class="navbar-brand" href="index.html">
                   <h2 class="logo-font" data-lang="main-logo">ivan<strong>&nbsp;erben</strong></h2>
                   <h1 data-lang="sub-logo">kamenické a sochařské práce</h1>
                </a>
-               <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
+               aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                      <div class="hamburger__menu-icon">
                         <div class="hamburger__menu-icon__top"></div>
                         <div class="hamburger__menu-icon__middle"></div>
                         <div class="hamburger__menu-icon__bottom"></div>
                      </div>
                </button>
-               <div class="lang-switcher">
-                  <!-- main language for the site -->
-                  <span>cz</span>
-               </div>
-            </div> <!-- END of container -->
 
-            <div class="container container-navbar">
-               <div class="collapse navbar-collapse" id="mainNavbar">
-                  <div class="navbar-nav">
-                     <a class="nav-item nav-link active" href="index.html" data-menuitem="main"><i class="fa fa-home" aria-hidden="true"></i></a>
-                     <a class="nav-item nav-link" href="about.html" data-lang="menu2" data-menuitem="about">O nás</a>
-                     <a class="nav-item nav-link" href="realisations.html" data-lang="menu3" data-menuitem="realisations">Realizace</a>
-                     <a class="nav-item nav-link" href="pricing.html" data-lang="menu4" data-menuitem="pricing">Ceník</a>
-                     <a class="nav-item nav-link" href="contact.html" data-lang="menu5" data-menuitem="contact">Kontakt</a>
+               <div class="lang-switcher-wrapper">
+                  <div class="lang-switcher">
+                     <!-- main language for the site -->
+                     <span>cz</span>
                   </div>
                </div>
-            </div> <!-- END of container -->
 
-         </div>
+               <div class="collapse navbar-collapse" id="mainNavbar">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item active">
+                        <a class="nav-link" href="index.html" data-menuitem="main"><i class="fa fa-home" aria-hidden="true"></i></a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-lang="menu2" data-menuitem="about">O nás</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="realisations.html" data-lang="menu3" data-menuitem="realisations">Realizace</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="pricing.html" data-lang="menu4" data-menuitem="pricing">Ceník</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="contact.html" data-lang="menu5" data-menuitem="contact">Kontakt</a>
+                     </li>
+                  </ul>
+               </div>
+
+         </div> <!-- END of container -->
       </nav>
 
       <div class="loader-wrapper">
@@ -287,15 +298,7 @@
                   <!-- Featurette -->
                   <div class="row justify-content-center featurette">
 
-                     <div class = "col-md-4 push-md-8 text-left align-self-center">
-                        <h3 class="display-4 text-font" data-lang="feature-title2">Zahradní architektura a kamenné oplocení</h3>
-                        <h4 class="showcase-desc" data-lang="feature-desc2">
-                        Komplexní dodávky kamenných bran a oplocení, kamenných schodišť, stolů, lavic.
-                        </h4>
-                        <div class="btn-site" role="button" data-lang="more-button" data-link="kamenné oplocení">více...</div>
-                     </div> <!-- END of col -->
-
-                     <div class = "col-md-8 pull-md-4 align-self-center">
+                     <div class = "col-md-8 order-2 order-md-1 align-self-center">
                         <div id="carouselGarden" class="carousel slide carousel-feature" data-ride="carousel">
                            <div class="carousel-inner" role="listbox">
                               <div class="carousel-item active">
@@ -325,6 +328,13 @@
                         </div>
                      </div><!-- END of col -->
 
+                     <div class = "col-md-4 order-1 order-md-2 text-left align-self-center">
+                        <h3 class="display-4 text-font" data-lang="feature-title2">Zahradní architektura a kamenné oplocení</h3>
+                        <h4 class="showcase-desc" data-lang="feature-desc2">
+                        Komplexní dodávky kamenných bran a oplocení, kamenných schodišť, stolů, lavic.
+                        </h4>
+                        <div class="btn-site" role="button" data-lang="more-button" data-link="kamenné oplocení">více...</div>
+                     </div> <!-- END of col -->
 
                   </div> <!-- END of row --> <!-- END of featurette -->
 
@@ -376,15 +386,7 @@
                   <!-- Featurette -->
                   <div class="row justify-content-center featurette">
 
-                     <div class = "col-md-4 push-md-8 text-left align-self-center">
-                        <h3 class="display-4 text-font" data-lang="feature-title4">Restaurování</h3>
-                        <h4 class="showcase-desc" data-lang="feature-desc4">
-                        Bohaté zkušenosti s restaurováním kamenných památek, mimo jiné ze seznamu UNESCO.
-                        </h4>
-                        <div class="btn-site" role="button" data-lang="more-button" data-link="restaurování">více...</div>
-                     </div> <!-- END of col -->
-
-                     <div class = "col-md-8 pull-md-4 align-self-center">
+                     <div class = "col-md-8 order-2 order-md-1 align-self-center">
                         <div id="carouselRestorations" class="carousel slide carousel-feature" data-ride="carousel">
                            <div class="carousel-inner" role="listbox">
                               <div class="carousel-item active">
@@ -404,6 +406,14 @@
                            </a>
                         </div>
                      </div><!-- END of col -->
+
+                     <div class = "col-md-4 order-1 order-md-2 text-left align-self-center">
+                        <h3 class="display-4 text-font" data-lang="feature-title4">Restaurování</h3>
+                        <h4 class="showcase-desc" data-lang="feature-desc4">
+                        Bohaté zkušenosti s restaurováním kamenných památek, mimo jiné ze seznamu UNESCO.
+                        </h4>
+                        <div class="btn-site" role="button" data-lang="more-button" data-link="restaurování">více...</div>
+                     </div> <!-- END of col -->
 
                   </div> <!-- END of row --> <!-- END of featurette -->
 
@@ -487,8 +497,8 @@
       <!-- Vendors JavaScript files
       ================================================== -->
 
-      <!-- build:js ./assets/js/jquery-2.2.4.min.js -->
-      <script src="temp/js/jquery-2.2.4.min.js"></script>
+      <!-- build:js ./assets/js/jquery-3.3.1.min.js -->
+      <script src="temp/js/jquery-3.3.1.min.js"></script>
       <!-- endbuild -->
 
       <!-- build:js ./assets/js/vendorscripts.js -->

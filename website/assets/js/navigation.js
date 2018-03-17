@@ -121,11 +121,11 @@ $(function(global){
 	  			$(".hamburger__menu-icon").removeClass("hamburger__menu-icon--close-x");
 			})
 
-	    $('.nav-link').on( 'click', function(e) {
+	    $('.nav-item').on( 'click', function(e) {
 	        e.preventDefault();
 					if (!pageSwitchingActive) {
-	        	var url = this.href.trim().toLowerCase();
-	        	var menuName = $(this).data('menuitem').trim().toLowerCase();
+	        	var url = $(this).children('.nav-link').attr('href').trim().toLowerCase();
+	        	var menuName = $(this).children('.nav-link').data('menuitem').trim().toLowerCase();
 						navItemClickCallback(menuName,this,url);
 					}
 	    }); // end of click listener
@@ -141,7 +141,7 @@ $(function(global){
 		if (typeof callbackFunc!=='function') {
 			callbackFunc = function(){};
 		}
-		$(elem).siblings(".nav-link").removeClass("active");
+		$(elem).parent().children('.nav-item').removeClass("active");
 		$(elem).addClass("active");
 
 		//close the mobile menu if it is opened
@@ -346,7 +346,7 @@ $(function(global){
 	    }
 	}
 
-	$(window).load(function(){
+	$(window).on('load',function(){
 		linkToGallery();
 		navMenuInit();
 		placeJumpButtonListeners();

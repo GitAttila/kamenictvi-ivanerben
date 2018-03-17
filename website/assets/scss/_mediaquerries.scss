@@ -1,5 +1,5 @@
 @media (min-width: 2560px) {
-   
+
 
 }
 
@@ -22,7 +22,7 @@
     .carousel-indicators {
         display: none;
     }
-    .grid-item,.grid-item-pricing { 
+    .grid-item,.grid-item-pricing {
         width: 33%;
     }
     .grid-item-selected {
@@ -42,10 +42,6 @@
         font-size: 1.2rem;
         margin-bottom: 2rem;
     }
-    .carousel-feature .carousel-inner {
-        height: 400px;
-        width: 400px;
-    }
     .about-carousel-caption .section-header {
         margin-bottom: 1rem;
     }
@@ -57,10 +53,10 @@
     }
     .card-title {
         font-size: 2rem;
-    } 
+    }
     .card-text {
         font-size: 1.2rem;
-    } 
+    }
     blockquote {
         font-size: 1rem;
     }
@@ -88,9 +84,9 @@
 
 /* Small tablet to big tablet: from 768px to 992px */
 @media only screen and (max-width: 991px) {
-    .carousel-feature .carousel-inner {
-        height: 350px;
-        width: 350px;
+    .carousel-feature {
+        width: 30rem;
+        height: 30rem;
     }
     .container-navbar {
         position: relative;
@@ -150,7 +146,7 @@
         font-size: 2rem;
     }
     #main-carousel .carousel-text p {
-        display: none;        
+        display: none;
     }
     .featurette>.text-right,.featurette>.text-left {
         text-align: center!important;
@@ -161,10 +157,6 @@
     }
     .about-carousel-caption .section-header {
         margin-bottom: 0;
-    }
-    .carousel-feature .carousel-inner {
-        height: 350px;
-        width: 350px;
     }
     .featurette h3 {
         font-size: 2.2rem;
@@ -196,7 +188,7 @@
         text-align: center;
         padding: 0 0 2rem 0;
     }
-    .grid-item,.grid-item-pricing  { 
+    .grid-item,.grid-item-pricing  {
         width: 50%;
     }
     .grid-item-selected{
@@ -234,11 +226,11 @@
         top: 90%;
         transform: translate(-50%,-100%);
     }
-    .carousel-feature .carousel-inner {
-        height: 250px;
-        width: 250px;
+    .carousel-feature {
+        width: 22rem;
+        height: 22rem;
     }
-    .grid-item-pricing  { 
+    .grid-item-pricing  {
         width: 100%;
     }
     .footer-bottom{
@@ -259,13 +251,8 @@
 
 /* Small phones to small tablets: from 576px to 767px  and landscape orientation */
 @media only screen and (max-width: 767px) and (orientation:landscape) {
-
+    .carousel-feature {
+        width: 22rem;
+        height: 22rem;
+    }
 }
-
-
-
-
-
-
-
-

@@ -28,12 +28,12 @@ gulp.task("vendorscripts",['vendorscripts_custom'], function(){
 	]
 	return gulp.src(paths)
 		.pipe(order([
-			"*tether*.*",
+			"*popper*.*",
 			"*bootstrap*.*",
 			"*imagesloaded*.*",
 			"*isotope*.*",
-			"*parallax*.*",
 			"*ScrollMagic*.*",
+			"*parallax*.*",
 			"*TweenMax*.*",
 			"*animation*.*"
 		]))
