@@ -55,6 +55,25 @@
         ga('create', 'UA-110113332-1', 'auto');
         ga('send', 'pageview');
       </script>
+      <!-- Cookie consent -->
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+      <script>
+      window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "#171717",
+            "text": "#ffb000"
+          },
+          "button": {
+            "background": "transparent",
+            "text": "#ffb000",
+            "border": "#ffb000"
+          }
+        }
+      })});
+      </script>
 
    </head>
    <body>
@@ -98,22 +117,20 @@
          <div class="loader"></div>
       </div>
 
-      <div class="btn-wrapper">
-         <div class="btn-icon-round btn-move-up">
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
-         </div>
-      </div>
-
-      <div class="btn-wrapper">
-         <a href="#pointToJumpFromTop" class="btn-icon-round btn-down" role="button">
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
-         </a>
-      </div>
-
       <div id="ajax-content">
          <div id="ajax-container">
 
-            <!--div class="carousel"-->
+           <div class="btn-wrapper">
+              <div class="btn-icon-round btn-move-up">
+                 <i class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+           </div>
+
+           <div class="btn-wrapper">
+              <a href="#pointToJumpFromTop" class="btn-icon-round btn-down" role="button">
+                 <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </a>
+           </div>
 
                <div id="main-carousel" class="carousel slide" data-ride="carousel"> <!-- class="carousel slide" data-ride="carousel"-->
 

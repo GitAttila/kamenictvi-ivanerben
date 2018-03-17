@@ -41,6 +41,26 @@
         ga('send', 'pageview');
       </script>
 
+      <!-- Cookie consent -->
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+      <script>
+      window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "#171717",
+            "text": "#ffb000"
+          },
+          "button": {
+            "background": "transparent",
+            "text": "#ffb000",
+            "border": "#ffb000"
+          }
+        }
+      })});
+      </script>
+
    </head>
    <body>
 
