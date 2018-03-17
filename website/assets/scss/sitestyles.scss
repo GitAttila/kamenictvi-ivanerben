@@ -118,8 +118,8 @@ button:focus {
 	}
 	.navbar-nav {
 		margin: 0.5rem;
-		margin-right: 4rem;
 		.nav-item {
+			text-align: center;
 			padding: 0rem 0.5rem;
 			border: 2px solid transparent;
 		 	transition: background-color .25s ease-in-out, border .25s ease-in-out;
@@ -147,10 +147,12 @@ button:focus {
 
 .navbar-toggler {
 	position: relative;
-	right: 5rem;
+	/*right: 5rem;
 	top: 50%;
-	transform:translateY(-50%);
+	transform:translateY(-50%);*/
 	color: $primary-text-color;
+	margin-left: auto;
+	margin-right: 2rem;
 	.navbar-toggler-icon {
 		vertical-align: baseline;
 	}
@@ -179,8 +181,7 @@ button:focus {
 	}
 }
 .lang-switcher-wrapper {
-	position: absolute;
-	right: 0;
+	align-self: center;
 	margin-right: 1rem;
 }
 .lang-switcher {

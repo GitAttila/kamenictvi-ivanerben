@@ -67,28 +67,12 @@
       <nav class="navbar navbar-expand-lg fixed-top navbar-custom-light shadowed-down">
          <div class="container">
 
-               <a class="navbar-brand" href="index.html">
+               <a class="navbar-brand order-1" href="index.html">
                   <h2 class="logo-font" data-lang="main-logo">ivan<strong>&nbsp;erben</strong></h2>
                   <h1 data-lang="sub-logo">kamenické a sochařské práce</h1>
                </a>
 
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
-               aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                     <div class="hamburger__menu-icon">
-                        <div class="hamburger__menu-icon__top"></div>
-                        <div class="hamburger__menu-icon__middle"></div>
-                        <div class="hamburger__menu-icon__bottom"></div>
-                     </div>
-               </button>
-
-               <div class="lang-switcher-wrapper">
-                  <div class="lang-switcher">
-                     <!-- main language for the site -->
-                     <span>cz</span>
-                  </div>
-               </div>
-
-               <div class="collapse navbar-collapse" id="mainNavbar">
+               <div class="collapse navbar-collapse order-2" id="mainNavbar">
                   <ul class="navbar-nav ml-auto">
                      <li class="nav-item active">
                         <a class="nav-link" href="index.html" data-menuitem="main"><i class="fa fa-home" aria-hidden="true"></i></a>
@@ -107,6 +91,24 @@
                      </li>
                   </ul>
                </div>
+
+               <button class="navbar-toggler order-3" type="button" data-toggle="collapse" data-target="#mainNavbar"
+               aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                     <div class="hamburger__menu-icon">
+                        <div class="hamburger__menu-icon__top"></div>
+                        <div class="hamburger__menu-icon__middle"></div>
+                        <div class="hamburger__menu-icon__bottom"></div>
+                     </div>
+               </button>
+
+               <div class="lang-switcher-wrapper order-4">
+                  <div class="lang-switcher">
+                     <!-- main language for the site -->
+                     <span>cz</span>
+                  </div>
+               </div>
+
+
 
          </div> <!-- END of container -->
       </nav>

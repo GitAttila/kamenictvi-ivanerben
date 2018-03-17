@@ -113,9 +113,12 @@ $(function(global){
 			global.mySite.cachedPage = cachedPage;
 
 			//placeLangSwitchListener(true);
-
 		  $('#mainNavbar').on('show.bs.collapse', function () {
+					$('.navbar .navbar-collapse').removeClass('order-2').addClass('order-5');
 	  			$(".hamburger__menu-icon").addClass("hamburger__menu-icon--close-x");
+			})
+			$('#mainNavbar').on('hidden.bs.collapse', function () {
+					$('.navbar .navbar-collapse').removeClass('order-5').addClass('order-2');
 			})
 	 		$('#mainNavbar').on('hide.bs.collapse', function () {
 	  			$(".hamburger__menu-icon").removeClass("hamburger__menu-icon--close-x");
