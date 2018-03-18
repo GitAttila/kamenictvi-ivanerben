@@ -7,32 +7,32 @@ $(function(global){
     var carouselsSetup = [
             {
                 carousel: "#main-carousel",
-                interval:700000,
+                interval:7000,
                 pause: "none"
             },
             {
                 carousel: "#about-carousel",
-                interval:500000,
+                interval:5000,
                 pause: "none"
             },
             {
                 carousel: "#carouselTombstones",
-                interval:300000,
+                interval:3000,
                 pause: "none"
             },
             {
                 carousel: "#carouselGarden",
-                interval:300000,
+                interval:3000,
                 pause: "none"
             },
             {
                 carousel: "#carouselRestorations",
-                interval:300000,
+                interval:3000,
                 pause: "none"
             },
             {
                 carousel: "#CarouselMonuments",
-                interval:300000,
+                interval:3000,
                 pause: "none"
             }
     ];

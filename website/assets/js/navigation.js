@@ -127,25 +127,24 @@ $(function(global){
 	    $('.nav-item').on( 'click', function(e) {
 	        e.preventDefault();
 					if (!pageSwitchingActive) {
+						var menuName = $(this).children('.nav-link').data('menuitem').trim().toLowerCase();
 	        	var url = $(this).children('.nav-link').attr('href').trim().toLowerCase();
-	        	var menuName = $(this).children('.nav-link').data('menuitem').trim().toLowerCase();
-						navItemClickCallback(menuName,this,url);
+						$(this).parent().children('.nav-item').removeClass("active");
+						$(this).addClass("active");
+						navItemClickCallback(menuName,url);
 					}
 	    }); // end of click listener
 	}
 
-	function navItemClickCallback (memuItemName,elem,url,callbackFunc) {
+	function navItemClickCallback (memuItemName,url,callbackFunc) {
 		//console.log(memuItemName,elem,url,callbackFunc);
 		pageSwitchingActive = true;
 		if (typeof menuItemName !== 'string') {menuItemName=''};
 		lang = LNG$().getSelectedLang();
-		elem = elem || '';
 		url = url || '';
 		if (typeof callbackFunc!=='function') {
 			callbackFunc = function(){};
 		}
-		$(elem).parent().children('.nav-item').removeClass("active");
-		$(elem).addClass("active");
 
 		//close the mobile menu if it is opened
 		$('#mainNavbar').collapse('hide');
@@ -277,7 +276,7 @@ $(function(global){
 			}
 		})
 
-		$(".lang-switcher>span").on("click", function(){
+		$(".lang-switcher").on("click", function(){
 			var next = activeLanguages.indexOf(activeLang)+1;
 			if (!isLangDefined(activeLanguages,activeLang)) {
 				return;
@@ -313,15 +312,16 @@ $(function(global){
 			e.preventDefault;
 			var activeLang = LNG$().getSelectedLang();
 			var galLink = $(this).data('link').toLowerCase().trim();
-			var $elem = $("[data-menuitem='realisations']");
 			var url = window.location.href;
 			if (url.search("index.html") >= 0 ) {
 				url = url.replace("index.html","realisations.html");
 			} else {
 				url = url + "realisations.html";
 			}
+			$(".nav-item").removeClass("active");
+			$("[data-menuitem='realisations']").parent().addClass("active");
 
-			navItemClickCallback('realisations',$elem,url,function(){
+			navItemClickCallback('realisations',url,function(){
 					$(".filter-item").each(function(i){
 						if ($(this).data('lang') !== undefined) {
 							if ($(this).data('lang').toLowerCase().trim() === galLink) {
