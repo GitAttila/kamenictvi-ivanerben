@@ -264,9 +264,9 @@ $(function(global){
 	function placeLangSwitchListener() {
 		var activeLanguages =[];
 		var languages = {
-			"cz":true,
+			"cz":false,
 			"en":true,
-			"de":false
+			"de":true
 		};
 		activeLang = LNG$().getSelectedLang();
 
